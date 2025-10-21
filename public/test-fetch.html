@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; }
+        button { background: #0070f3; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; margin: 10px; }
+        .log { background: #f1f1f1; padding: 10px; margin: 10px 0; border-radius: 4px; font-family: monospace; white-space: pre-wrap; }
+        .error { background: #ffebee; color: #c62828; }
+        .success { background: #e8f5e8; color: #2e7d32; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Browser Fetch Test</h1>
+        <p>Testing fetch requests to the API endpoints</p>
+        
+        <button onclick="testSimpleAPI()">Test Simple API</button>
+        <button onclick="testContentAPI()">Test Content API</button>
+        <button onclick="testMultipleRequests()">Test Multiple Requests</button>
+        <button onclick="clearLogs()">Clear Logs</button>
+        
+        <div id="logs"></div>
+    </div>
+
+    <script>
+        function log(message, type = 'info') {
+            const logs = document.getElementById('logs');
+            const div = document.createElement('div');
+            div.className = `log ${type}`;
+            div.textContent = `${new Date().toLocaleTimeString()}: ${message}`;
+            logs.appendChild(div);
+            console.log(message);
+        }
+
+        async function testSimpleAPI() {
+            log('🧪 Testing simple API...');
+            try {
+                const response = await fetch('/api/simple-test');
+                log(`📡 Response status: ${response.status} ${response.statusText}`);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const result = await response.json();
+                log(`✅ Simple API success: ${result.message}`, 'success');
+                log(`📊 Response keys: ${Object.keys(result)}`);
+            } catch (error) {
+                log(`❌ Simple API error: ${error.message}`, 'error');
+            }
+        }
+
+        async function testContentAPI() {
+            log('🧪 Testing content API...');
+            try {
+                const response = await fetch('/api/content/general?section_key=hero_section');
+                log(`📡 Response status: ${response.status} ${response.statusText}`);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const result = await response.json();
+                log(`✅ Content API success!`, 'success');
+                log(`📊 Response keys: ${Object.keys(result)}`);
+                
+                if (result.success && result.data && result.data.content) {
+                    log(`🎯 Headline: ${result.data.content.headline}`);
+                } else {
+                    log(`⚠️ Unexpected response structure`);
+                }
+            } catch (error) {
+                log(`❌ Content API error: ${error.message}`, 'error');
+            }
+        }
+
+        async function testMultipleRequests() {
+            log('🧪 Testing multiple concurrent requests...');
+            
+            const promises = [];
+            for (let i = 0; i < 3; i++) {
+                promises.push(
+                    fetch('/api/content/general?section_key=hero_section')
+                        .then(r => r.json())
+                        .then(data => ({ success: true, data, index: i }))
+                        .catch(error => ({ success: false, error: error.message, index: i }))
+                );
+            }
+            
+            try {
+                const results = await Promise.all(promises);
+                results.forEach(result => {
+                    if (result.success) {
+                        log(`✅ Request ${result.index}: Success`, 'success');
+                    } else {
+                        log(`❌ Request ${result.index}: ${result.error}`, 'error');
+                    }
+                });
+            } catch (error) {
+                log(`❌ Multiple requests error: ${error.message}`, 'error');
+            }
+        }
+
+        function clearLogs() {
+            document.getElementById('logs').innerHTML = '';
+        }
+
+        // Auto-test on page load
+        window.addEventListener('load', () => {
+            log('🚀 Page loaded, ready for testing');
+            setTimeout(testContentAPI, 1000);
+        });
+    </script>
+</body>
+</html>

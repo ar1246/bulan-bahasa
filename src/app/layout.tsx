@@ -1,32 +1,52 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Parkinsans } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ThemeProvider } from "@/components/theme-provider";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
+import { getContentSection } from "@/lib/content-server";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+// Generate metadata dynamically from content management
+export async function generateMetadata(): Promise<Metadata> {
+  try {
+    // Use a simpler approach for metadata generation to avoid SSR issues
+    // Try to fetch site info, but don't let errors break the app
+    let siteInfo = null;
+    try {
+      siteInfo = await getContentSection('site_info');
+    } catch (contentError) {
+      // Silently fail for metadata generation - log but don't break
+      console.log('Metadata: Could not fetch site info, using defaults');
+    }
+    
+    const title = String(siteInfo?.content?.site_title || 'HUT KE-13 KAB. PANGANDARAN - Bulan Bahasa & Hari Santri 2025');
+    const description = String(siteInfo?.content?.description || 'Youth Competition Event - Showcase your creativity and talents!');
+    const eventName = String(siteInfo?.content?.event_name || 'Bulan Bahasa & Hari Santri 2025');
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-const parkinsans = Parkinsans({
-  variable: "--font-parkinsans",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800"],
-  fallback: ["system-ui", "sans-serif"],
-  adjustFontFallback: false,
-});
-
-export const metadata: Metadata = {
-  title: "CodeGuide Starter Kit",
-  description:
-    "A modern Next.js starter with TypeScript, TailwindCSS, shadcn/ui, Vercel AI SDK, Clerk, and Supabase",
-};
+    return {
+      title: `${title} - ${eventName}`,
+      description,
+      openGraph: {
+        title: `${title} - ${eventName}`,
+        description,
+        type: 'website',
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: `${title} - ${eventName}`,
+        description,
+      },
+    };
+  } catch (error) {
+    console.error('Error generating metadata:', error);
+    
+    // Fallback metadata
+    return {
+      title: 'HUT KE-13 KAB. PANGANDARAN - Bulan Bahasa & Hari Santri 2025',
+      description: 'Youth Competition Event - Showcase your creativity and talents!',
+    };
+  }
+}
 
 export default function RootLayout({
   children,
@@ -36,16 +56,20 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning>
-        <body
-          className={`${geistSans.className} ${geistMono.className} ${parkinsans.className} antialiased`}
-        >
+        <body className="font-sans antialiased">
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
             enableSystem
             disableTransitionOnChange
           >
-            {children}
+            <div className="min-h-screen flex flex-col">
+              <Header />
+              <div className="flex-1">
+                {children}
+              </div>
+              <Footer />
+            </div>
           </ThemeProvider>
         </body>
       </html>
