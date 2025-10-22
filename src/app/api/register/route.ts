@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
       }
 
       // Validate competition category
-      const validCompetitions = ['Arabic Creative Comic', 'Sundanese Pop Cover', 'Market Day'];
+      const validCompetitions = ['Film Pendek', 'Mini Vlog', 'Vocal Grup', 'Komik Bhs Arab', 'Market Day'];
       if (!validCompetitions.includes(competition_category)) {
         return NextResponse.json({ 
           error: 'Invalid competition category' 

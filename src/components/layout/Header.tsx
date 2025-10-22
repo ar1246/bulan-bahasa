@@ -27,12 +27,12 @@ const Header = () => {
 
   // Fallback navigation items
   const fallbackNavItems = [
-    { name: 'Home', href: '/' },
-    { name: 'About The Competitions', href: '/competitions' },
-    { name: 'Schedule & Timeline', href: '/schedule' },
-    { name: 'Gallery', href: '/gallery' },
-    { name: 'Register/Info', href: '/register' },
-    { name: 'Contact', href: '/contact' },
+    { name: 'Beranda 🏠', href: '/' },
+    { name: 'Serunya Lomba 🏆', href: '/competitions' },
+    { name: 'Jadwal & Acara 📅', href: '/schedule' },
+    { name: 'Galeri Keren 📸', href: '/gallery' },
+    { name: 'Daftar/Info 📝', href: '/register' },
+    { name: 'Hubungi Kita 💬', href: '/contact' },
   ];
 
   // Use dynamic navigation items if available, otherwise fallback
@@ -54,6 +54,11 @@ const Header = () => {
                 <div className="font-bold text-sm">EKSPRESI</div>
               </div>
             </div>
+            <div className="block sm:hidden">
+              <div className="text-xs font-semibold text-gray-800 max-w-[120px] truncate">
+                EKSPRESI 2025
+              </div>
+            </div>
             <div className="hidden sm:block">
               <div className="text-sm font-semibold text-gray-800">
                 {String(currentSiteInfo.site_title || '')}
@@ -62,12 +67,12 @@ const Header = () => {
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-6">
+          <nav className="hidden lg:flex items-center space-x-4 sm:space-x-6">
             {navItems.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
-                className="text-gray-700 hover:text-orange-500 font-medium transition-colors duration-200"
+                 className="text-gray-700 hover:text-orange-500 font-medium text-sm sm:text-base transition-colors duration-200"
               >
                 {item.name}
               </Link>
@@ -76,8 +81,8 @@ const Header = () => {
             {/* Authentication */}
             <SignedOut>
               <SignInButton mode="modal">
-                <button className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200">
-                  Login
+                <button                  className="bg-orange-500 hover:bg-orange-600 text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg font-medium text-sm sm:text-base transition-colors duration-200">
+                  Masuk, Gan! 👋
                 </button>
               </SignInButton>
             </SignedOut>
@@ -90,9 +95,9 @@ const Header = () => {
             {isAdmin && (
               <Link
                 href="/admin"
-                className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200"
+                 className="bg-purple-600 hover:bg-purple-700 text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg font-medium text-sm sm:text-base transition-colors duration-200"
               >
-                Admin
+                Admin Zone 🔧
               </Link>
             )}
           </nav>
@@ -104,7 +109,7 @@ const Header = () => {
               <SignedOut>
                 <SignInButton mode="modal">
                   <button className="bg-orange-500 hover:bg-orange-600 text-white px-3 py-1.5 rounded-lg text-sm font-medium transition-colors duration-200">
-                    Login
+                    Masuk, Gan! 👋
                   </button>
                 </SignInButton>
               </SignedOut>
@@ -146,7 +151,7 @@ const Header = () => {
               <SignedOut>
                 <SignInButton mode="modal">
                   <button className="text-orange-500 hover:text-orange-600 font-medium py-2 text-left transition-colors duration-200">
-                    Login / Sign Up
+                    Masuk / Daftar, Yuk! 🎉
                   </button>
                 </SignInButton>
               </SignedOut>

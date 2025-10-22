@@ -47,7 +47,7 @@ const galleryItems = [
   {
     id: 4,
     type: 'video',
-    title: 'Short Film Drama',
+    title: 'Film Pendek',
     category: 'film',
     year: '2024',
     thumbnail: '🎭',
@@ -110,10 +110,10 @@ export default function GalleryPage() {
   const [activeFilter, setActiveFilter] = useState('all');
 
   const filters = [
-    { id: 'all', label: 'All Works', emoji: '🌟' },
+    { id: 'all', label: 'Semua Karya', emoji: '🌟' },
     { id: 'vlog', label: 'Vlog', emoji: '🎬' },
-    { id: 'comic', label: 'Comic', emoji: '🎨' },
-    { id: 'music', label: 'Music', emoji: '🎤' },
+    { id: 'comic', label: 'Komik', emoji: '🎨' },
+    { id: 'music', label: 'Musik', emoji: '🎤' },
     { id: 'film', label: 'Film', emoji: '🎭' },
     { id: 'market', label: 'Market Day', emoji: '🛍️' }
   ];
@@ -126,11 +126,11 @@ export default function GalleryPage() {
     <main className="container mx-auto px-4 py-12">
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
-            Competition Gallery
+            Galeri Lomba
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Explore amazing works from our talented students! Get inspired by winning entries 
-            and creative submissions from previous years.
+            Liat karya-karya keren dari siswa-siswa berbakat kita! Dapet inspirasi dari karya pemenang 
+            dan submission kreatif dari tahun-tahun sebelumnya.
           </p>
         </div>
 
@@ -182,10 +182,10 @@ export default function GalleryPage() {
                   {item.year}
                 </div>
 
-                {/* Type Badge */}
-                <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm rounded-full px-2 py-1 text-xs font-semibold">
-                  {item.type === 'video' ? '🎥 Video' : '🖼️ Image'}
-                </div>
+                 {/* Type Badge */}
+                 <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm rounded-full px-2 py-1 text-xs font-semibold">
+                   {item.type === 'video' ? '🎥 Video' : '🖼️ Gambar'}
+                 </div>
               </div>
 
               {/* Content */}
@@ -196,9 +196,9 @@ export default function GalleryPage() {
                 <p className="text-sm text-gray-600 mb-2">
                   {item.description}
                 </p>
-                <p className="text-xs text-gray-500 mb-3">
-                  by {item.author}
-                </p>
+                 <p className="text-xs text-gray-500 mb-3">
+                   oleh {item.author}
+                 </p>
                 
                 {/* Stats */}
                 <div className="flex items-center justify-between text-xs text-gray-500">
@@ -206,33 +206,33 @@ export default function GalleryPage() {
                     <span>👁️ {item.views}</span>
                     <span>❤️ {item.likes}</span>
                   </div>
-                  <Badge variant="secondary" className="text-xs">
-                    Winner
-                  </Badge>
+                   <Badge variant="secondary" className="text-xs">
+                     Pemenang
+                   </Badge>
                 </div>
               </CardContent>
             </Card>
           ))}
         </div>
 
-        {/* Load More */}
-        <div className="text-center mb-12">
-          <Button 
-            size="lg"
-            variant="outline"
-            className="bg-white hover:bg-gray-50"
-          >
-            Load More Works
-          </Button>
-        </div>
+         {/* Load More */}
+         <div className="text-center mb-12">
+           <Button 
+             size="lg"
+             variant="outline"
+             className="bg-white hover:bg-gray-50"
+           >
+             Muat Lebih Banyak Karya
+           </Button>
+         </div>
 
         {/* Statistics */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
           {[
-            { number: '200+', label: 'Creative Works', emoji: '🎨' },
-            { number: '50+', label: 'Winning Entries', emoji: '🏆' },
-            { number: '4', label: 'Years Running', emoji: '📅' },
-            { number: '1000+', label: 'Student Participants', emoji: '👥' }
+            { number: '200+', label: 'Karya Kreatif', emoji: '🎨' },
+            { number: '50+', label: 'Karya Pemenang', emoji: '🏆' },
+            { number: '4', label: 'Tahun Berjalan', emoji: '📅' },
+            { number: '1000+', label: 'Peserta Siswa', emoji: '👥' }
           ].map((stat, index) => (
             <Card key={index} className="text-center">
               <CardContent className="pt-6">
@@ -249,11 +249,11 @@ export default function GalleryPage() {
         {/* Call to Action */}
         <div className="text-center bg-white rounded-2xl shadow-lg p-8">
           <h2 className="text-2xl font-bold text-gray-800 mb-4">
-            Want to Showcase Your Work?
+            Mau Pamerin Karya Kamu?
           </h2>
           <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
-            Join our competitions and get a chance to have your work featured in our gallery! 
-            Show your creativity and inspire others.
+            Ikut lomba kita dan dapetin kesempatan buat karya kamu ditampilin di galeri kita! 
+            Tunjukin kreativitas kamu dan inspirasi orang lain.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button 
@@ -261,14 +261,14 @@ export default function GalleryPage() {
               className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600"
               onClick={() => window.location.href = '/register'}
             >
-              📝 Register for Competitions
+              📝 Daftar Lomba
             </Button>
             <Button 
               size="lg"
               variant="outline"
               onClick={() => window.location.href = '/contact'}
             >
-              💬 Submit Your Work
+              💬 Kirim Karya Kamu
             </Button>
           </div>
         </div>

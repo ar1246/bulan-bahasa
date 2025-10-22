@@ -118,7 +118,7 @@ const GallerySection = () => {
     {
       id: 4,
       type: 'video',
-      title: 'Short Film Drama',
+      title: 'Film Pendek',
       category: 'film',
       year: '2024',
       thumbnail: '🎭',
@@ -163,10 +163,10 @@ const GallerySection = () => {
   ];
 
   const filters = [
-    { id: 'all', label: 'All Works', emoji: '🌟' },
+    { id: 'all', label: 'Semua Karya', emoji: '🌟' },
     { id: 'vlog', label: 'Vlog', emoji: '🎬' },
-    { id: 'comic', label: 'Comic', emoji: '🎨' },
-    { id: 'music', label: 'Music', emoji: '🎤' },
+    { id: 'comic', label: 'Komik', emoji: '🎨' },
+    { id: 'music', label: 'Musik', emoji: '🎤' },
     { id: 'film', label: 'Film', emoji: '🎭' },
     { id: 'market', label: 'Market Day', emoji: '🛍️' }
   ];
@@ -178,13 +178,13 @@ const GallerySection = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
-            NEED INSPIRATION?
+            MAU CARI INSPIRASI? 💡
           </h2>
           <p className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent mb-4">
-            SEE CREATIVE EXAMPLES HERE!
+            LIAT CONTOH KEREN DI SINI! 🔥
           </p>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Check out winning works from previous years to get inspired for your own masterpiece!
+            Cek karya-karya pemenang dari tahun-tahun sebelumnya buat inspirasi bikin masterpiece kamu sendiri!
           </p>
         </div>
 
@@ -268,17 +268,17 @@ const GallerySection = () => {
             className="bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white font-bold py-4 px-8 rounded-full text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl inline-flex items-center space-x-2"
           >
             <span>📸</span>
-            <span>VIEW FULL GALLERY</span>
+            <span>LIAT GALERI LENGKAP</span>
           </button>
         </div>
 
         {/* Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12 max-w-2xl mx-auto">
           {[
-            { number: '200+', label: 'Creative Works' },
-            { number: '50+', label: 'Winning Entries' },
-            { number: '4', label: 'Years Running' },
-            { number: '1000+', label: 'Student Participants' }
+            { number: '200+', label: 'Karya Keren' },
+            { number: '50+', label: 'Karya Pemenang' },
+            { number: '4', label: 'Tahun Berjalan' },
+            { number: '1000+', label: 'Peserta' }
           ].map((stat, index) => (
             <div key={index} className="text-center">
               <div className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">

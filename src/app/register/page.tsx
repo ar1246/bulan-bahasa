@@ -9,8 +9,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Alert, AlertDescription } from '@/components/ui/alert';
 
 const competitions = [
-  'Arabic Creative Comic',
-  'Sundanese Pop Cover',
+  'Film Pendek',
+  'Mini Vlog',
+  'Vocal Grup',
+  'Komik Bhs Arab',
   'Market Day'
 ];
 
@@ -86,10 +88,10 @@ export default function RegisterPage() {
     <main className="container mx-auto px-4 py-12">
       <div className="text-center mb-12">
         <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
-          🏫 Class Competition Registration
+          🏫 Pendaftaran Lomba Kelas
         </h1>
         <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-          Register for Arabic Creative Comic, Sundanese Pop Cover, or Market Day competitions.
+          Daftar buat lomba Film Pendek, Mini Vlog, Vocal Grup, Komik Bhs Arab, atau Market Day.
         </p>
       </div>
 
@@ -97,10 +99,10 @@ export default function RegisterPage() {
         <Card className="shadow-xl">
           <CardHeader>
             <CardTitle className="text-2xl text-center">
-              Registration Form
+              Formulir Pendaftaran
             </CardTitle>
             <CardDescription className="text-center text-base">
-              Please fill in all required fields to complete your registration
+              Isi semua field yang dibutuhin buat lengkapi pendaftaran kamu
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -117,98 +119,98 @@ export default function RegisterPage() {
             )}
 
             <form onSubmit={handleSubmit} className="space-y-6">
-              {/* PIC Name */}
-              <div>
-                <Label htmlFor="picName" className="text-base font-medium">
-                  PIC Name *
-                </Label>
-                <Input
-                  id="picName"
-                  type="text"
-                  placeholder="Enter your full name"
-                  value={formData.picName}
-                  onChange={(e) => handleInputChange('picName', e.target.value)}
-                  required
-                  className="mt-1"
-                />
-              </div>
+               {/* PIC Name */}
+               <div>
+                 <Label htmlFor="picName" className="text-base font-medium">
+                   Nama PIC *
+                 </Label>
+                 <Input
+                   id="picName"
+                   type="text"
+                    placeholder="Masukin nama lengkap kamu"
+                   value={formData.picName}
+                   onChange={(e) => handleInputChange('picName', e.target.value)}
+                   required
+                   className="mt-1"
+                 />
+               </div>
 
-              {/* Class */}
-              <div>
-                <Label htmlFor="class" className="text-base font-medium">
-                  Class *
-                </Label>
-                <Select value={formData.class} onValueChange={(value) => handleInputChange('class', value)}>
-                  <SelectTrigger className="mt-1">
-                    <SelectValue placeholder="Select your class" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {classes.map(cls => (
-                      <SelectItem key={cls} value={cls}>{cls}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+               {/* Class */}
+               <div>
+                 <Label htmlFor="class" className="text-base font-medium">
+                   Kelas *
+                 </Label>
+                 <Select value={formData.class} onValueChange={(value) => handleInputChange('class', value)}>
+                   <SelectTrigger className="mt-1">
+                      <SelectValue placeholder="Pilih kelas kamu" />
+                   </SelectTrigger>
+                   <SelectContent>
+                     {classes.map(cls => (
+                       <SelectItem key={cls} value={cls}>{cls}</SelectItem>
+                     ))}
+                   </SelectContent>
+                 </Select>
+               </div>
 
-              {/* Phone Number */}
-              <div>
-                <Label htmlFor="phoneNumber" className="text-base font-medium">
-                  Phone Number *
-                </Label>
-                <Input
-                  id="phoneNumber"
-                  type="tel"
-                  placeholder="+62 812-3456-7890"
-                  value={formData.phoneNumber}
-                  onChange={(e) => handleInputChange('phoneNumber', e.target.value)}
-                  required
-                  className="mt-1"
-                />
-              </div>
+               {/* Phone Number */}
+               <div>
+                 <Label htmlFor="phoneNumber" className="text-base font-medium">
+                   Nomor HP *
+                 </Label>
+                 <Input
+                   id="phoneNumber"
+                   type="tel"
+                   placeholder="+62 812-3456-7890"
+                   value={formData.phoneNumber}
+                   onChange={(e) => handleInputChange('phoneNumber', e.target.value)}
+                   required
+                   className="mt-1"
+                 />
+               </div>
 
-              {/* Competition Category */}
-              <div>
-                <Label htmlFor="competitionCategory" className="text-base font-medium">
-                  Competition Category *
-                </Label>
-                <Select value={formData.competitionCategory} onValueChange={(value) => handleInputChange('competitionCategory', value)}>
-                  <SelectTrigger className="mt-1">
-                    <SelectValue placeholder="Select competition" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {competitions.map(comp => (
-                      <SelectItem key={comp} value={comp}>{comp}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+               {/* Competition Category */}
+               <div>
+                 <Label htmlFor="competitionCategory" className="text-base font-medium">
+                   Kategori Lomba *
+                 </Label>
+                 <Select value={formData.competitionCategory} onValueChange={(value) => handleInputChange('competitionCategory', value)}>
+                   <SelectTrigger className="mt-1">
+                     <SelectValue placeholder="Pilih lomba" />
+                   </SelectTrigger>
+                   <SelectContent>
+                     {competitions.map(comp => (
+                       <SelectItem key={comp} value={comp}>{comp}</SelectItem>
+                     ))}
+                   </SelectContent>
+                 </Select>
+               </div>
 
-              {/* Submit Button */}
-              <div className="pt-4">
-                <Button 
-                  type="submit" 
-                  className="w-full bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-bold py-3 text-lg"
-                  disabled={isSubmitting || !isFormValid}
-                >
-                  {isSubmitting ? 'Submitting...' : 'Submit Registration'}
-                </Button>
-              </div>
+               {/* Submit Button */}
+               <div className="pt-4">
+                 <Button 
+                   type="submit" 
+                   className="w-full bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-bold py-3 text-lg"
+                   disabled={isSubmitting || !isFormValid}
+                 >
+                   {isSubmitting ? 'Lagi ngirim...' : 'Kirim Pendaftaran'}
+                 </Button>
+               </div>
             </form>
           </CardContent>
         </Card>
 
-        {/* Help Section */}
-        <div className="mt-8 text-center bg-white rounded-2xl shadow-lg p-6">
-          <h3 className="text-lg font-semibold text-gray-800 mb-3">Need Help?</h3>
-          <p className="text-gray-600 mb-4">
-            If you have any questions about the registration process, feel free to contact us.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Button variant="outline" onClick={() => window.location.href = '/contact'}>
-              💬 Contact Us
-            </Button>
-          </div>
-        </div>
+         {/* Help Section */}
+         <div className="mt-8 text-center bg-white rounded-2xl shadow-lg p-6">
+           <h3 className="text-lg font-semibold text-gray-800 mb-3">Butuh Bantuan?</h3>
+           <p className="text-gray-600 mb-4">
+             Kalo ada pertanyaan tentang proses pendaftaran, jangan ragu hubungi kita.
+           </p>
+           <div className="flex flex-col sm:flex-row gap-3 justify-center">
+             <Button variant="outline" onClick={() => window.location.href = '/contact'}>
+               💬 Hubungi Kita
+             </Button>
+           </div>
+         </div>
       </div>
     </main>
   );

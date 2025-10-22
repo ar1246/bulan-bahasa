@@ -1,0 +1,119 @@
+{
+  "contact_info": [
+    {
+      "id": "7626161d-a0f0-431b-9e07-f4e31ce4843d",
+      "type": "phone",
+      "label": "Phone & WhatsApp",
+      "value": "+62 812-3456-7890",
+      "is_active": true,
+      "sort_order": 1,
+      "created_at": "2025-10-21T04:03:29.886045+00:00",
+      "updated_at": "2025-10-21T04:03:29.886045+00:00"
+    },
+    {
+      "id": "29f4f900-cf50-4e8a-889c-e361a9cd716a",
+      "type": "email",
+      "label": "General Email",
+      "value": "info@competition2025.ac.id",
+      "is_active": true,
+      "sort_order": 2,
+      "created_at": "2025-10-21T04:03:29.886045+00:00",
+      "updated_at": "2025-10-21T04:03:29.886045+00:00"
+    },
+    {
+      "id": "50714b56-ea4c-44f9-a7f0-2b99d942964d",
+      "type": "address",
+      "label": "Office Location",
+      "value": "Campus 1 - Administration Office, Jl. Contoh No. 123, Pangandaran",
+      "is_active": true,
+      "sort_order": 3,
+      "created_at": "2025-10-21T04:03:29.886045+00:00",
+      "updated_at": "2025-10-21T04:03:29.886045+00:00"
+    }
+  ],
+  "navigation_items": [
+    {
+      "id": "e67a0e1b-f5ad-4e16-ad3a-01cb1cbc00ee",
+      "label": "Home",
+      "href": "/",
+      "is_active": true,
+      "sort_order": 1,
+      "target_new_tab": false,
+      "icon": "🏠",
+      "created_at": "2025-10-21T04:03:29.886045+00:00",
+      "updated_at": "2025-10-21T04:03:29.886045+00:00"
+    },
+    {
+      "id": "d79dbcf1-e973-43be-8ba2-bb5030b2128b",
+      "label": "About The Competitions",
+      "href": "/competitions",
+      "is_active": true,
+      "sort_order": 2,
+      "target_new_tab": false,
+      "icon": "🏆",
+      "created_at": "2025-10-21T04:03:29.886045+00:00",
+      "updated_at": "2025-10-21T04:03:29.886045+00:00"
+    },
+    {
+      "id": "926aba41-16a9-4584-a0a8-e206e8f2bf88",
+      "label": "Register/Info",
+      "href": "/register",
+      "is_active": true,
+      "sort_order": 3,
+      "target_new_tab": false,
+      "icon": "📝",
+      "created_at": "2025-10-21T04:03:29.886045+00:00",
+      "updated_at": "2025-10-21T04:03:29.886045+00:00"
+    }
+  ],
+  "social_media": [
+    {
+      "id": "19b39677-aca4-4eb3-8846-0e462fe62ee4",
+      "platform": "instagram",
+      "url": "https://instagram.com/competition2025",
+      "display_name": "Instagram",
+      "is_active": true,
+      "sort_order": 1,
+      "created_at": "2025-10-21T04:03:29.886045+00:00",
+      "updated_at": "2025-10-21T04:03:29.886045+00:00"
+    },
+    {
+      "id": "5626b1c9-eb04-45ca-8250-5483d6b2a4e4",
+      "platform": "youtube",
+      "url": "https://youtube.com/@competition2025",
+      "display_name": "YouTube",
+      "is_active": true,
+      "sort_order": 2,
+      "created_at": "2025-10-21T04:03:29.886045+00:00",
+      "updated_at": "2025-10-21T04:03:29.886045+00:00"
+    }
+  ],
+  "site_info": {
+    "id": "dev-site-info-2025-01",
+    "section_key": "site_info",
+    "title": "Site Information",
+    "content": {
+      "site_title": "Bulan Bahasa & Hari Santri 2025",
+      "event_name": "EKSPRESI",
+      "description": "Youth Competition Event - Showcase your creativity and talents!"
+    },
+    "updated_by": "dev-bypass",
+    "updated_at": "2025-10-22T00:00:00.000Z",
+    "created_at": "2025-10-22T00:00:00.000Z"
+  },
+  "hero_section": {
+    "id": "dev-hero-section-2025-01",
+    "section_key": "hero_section",
+    "title": "Hero Section",
+    "content": {
+      "headline": "Ekspresi 2025",
+      "subtitle": "Bulan Bahasa & Hari Santri",
+      "description": "Ayo ikuti lomba kreativitas pemuda dan tunjukkan bakatmu!",
+      "cta_text": "Daftar Sekarang",
+      "cta_link": "/register"
+    },
+    "updated_by": "dev-bypass",
+    "updated_at": "2025-10-22T00:00:00.000Z",
+    "created_at": "2025-10-22T00:00:00.000Z"
+  }
+}

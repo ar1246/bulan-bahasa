@@ -1,5 +1,15 @@
 // Content Management TypeScript Types
 
+export interface UserRole {
+  id: string;
+  user_id: string;
+  email: string;
+  role: 'user' | 'admin' | 'superuser';
+  created_by?: string;
+  created_at: string;
+  updated_at: string;
+}
+
 export interface ContentSection {
   id: string;
   section_key: string;

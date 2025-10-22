@@ -19,41 +19,41 @@ const MarketDay = () => {
   const businessCategories = [
     {
       icon: '🍔',
-      title: 'Food & Beverages',
-      description: 'Sell delicious food and drinks',
-      examples: 'Snacks, drinks, traditional foods',
+      title: 'Makanan & Minuman',
+      description: 'Jual makanan dan minuman yang enak',
+      examples: 'Cemilan, minuman, makanan tradisional',
       budget: 'Rp 100.000 - 300.000'
     },
     {
       icon: '🎨',
-      title: 'Handicrafts',
-      description: 'Create and sell handmade products',
-      examples: 'Art, crafts, accessories',
+      title: 'Kerajinan Tangan',
+      description: 'Buat dan jual produk buatan tangan',
+      examples: 'Seni, kerajinan, aksesoris',
       budget: 'Rp 100.000 - 500.000'
     },
     {
       icon: '💡',
-      title: 'Services',
-      description: 'Offer useful services to others',
-      examples: 'Tutoring, design, tech help',
+      title: 'Jasa',
+      description: 'Tawarin jasa yang berguna buat orang lain',
+      examples: 'Les, desain, bantuan teknis',
       budget: 'Rp 50.000 - 200.000'
     },
     {
       icon: '🚀',
-      title: 'Innovation',
-      description: 'Showcase creative solutions',
-      examples: 'Tech projects, new ideas',
+      title: 'Inovasi',
+      description: 'Pamerin solusi kreatif kamu',
+      examples: 'Proyek teknologi, ide baru',
       budget: 'Rp 200.000 - 500.000'
     }
   ];
 
   const handleSubmitRegistration = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitMessage('Submitting your Market Day participation...');
+    setSubmitMessage('Lagi kirim data partisipasi Market Day kamu...');
 
     // Simulate API call
     setTimeout(() => {
-      setSubmitMessage('Thank you for your interest in Market Day! We will contact you soon with details.');
+      setSubmitMessage('Makasih minat kamu di Market Day! Kami bakal hubungin kamu segera buat detailnya.');
       setRegistrationData({
         teamName: '',
         businessType: '',
@@ -73,10 +73,10 @@ const MarketDay = () => {
           🛍️ Market Day 2025
         </h1>
         <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-4">
-          An exciting entrepreneurial activity where students can showcase their business ideas and sell products or services!
+          Aktivitas kewirausahaan yang seru banget! Siswa bisa nunjukin ide bisnis mereka dan jual produk atau jasa!
         </p>
         <Badge variant="secondary" className="bg-yellow-100 text-yellow-800 text-lg px-4 py-2">
-          🎪 Special Activity - Optional Participation
+          🎪 Aktivitas Spesial - Ikutan Sukarela
         </Badge>
       </div>
 
@@ -89,31 +89,31 @@ const MarketDay = () => {
       {/* Activity Overview */}
       <Card className="shadow-lg mb-8">
         <CardHeader>
-          <CardTitle className="text-2xl text-gray-800">About Market Day</CardTitle>
+          <CardTitle className="text-2xl text-gray-800">Tentang Market Day</CardTitle>
           <CardDescription>
-            Learn entrepreneurship skills while having fun!
+            Belajar kewirausahaan sambil seru-seruan!
           </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <h3 className="font-semibold text-lg text-gray-800 mb-3">🎯 Learning Objectives</h3>
+              <h3 className="font-semibold text-lg text-gray-800 mb-3">🎯 Tujuan Belajar</h3>
               <ul className="space-y-2 text-gray-600">
-                <li>• Business planning and management</li>
-                <li>• Financial literacy and budgeting</li>
-                <li>• Marketing and sales skills</li>
-                <li>• Teamwork and collaboration</li>
-                <li>• Creative problem-solving</li>
+                <li>• Perencanaan dan manajemen bisnis</li>
+                <li>• Literasi keuangan dan budgeting</li>
+                <li>• Skill marketing dan jualan</li>
+                <li>• Kerja tim dan kolaborasi</li>
+                <li>• Pemecahan masalah kreatif</li>
               </ul>
             </div>
             <div>
-              <h3 className="font-semibold text-lg text-gray-800 mb-3">📋 Activity Details</h3>
+              <h3 className="font-semibold text-lg text-gray-800 mb-3">📋 Detail Aktivitas</h3>
               <ul className="space-y-2 text-gray-600">
-                <li>• <strong>Date:</strong> November 5, 2025</li>
-                <li>• <strong>Time:</strong> 08:00 - 14:00</li>
-                <li>• <strong>Location:</strong> School Field</li>
-                <li>• <strong>Team Size:</strong> Maximum 5 students</li>
-                <li>• <strong>Budget Range:</strong> Rp 100.000 - 500.000</li>
+                <li>• <strong>Tanggal:</strong> 5 November 2025</li>
+                <li>• <strong>Waktu:</strong> 08:00 - 14:00</li>
+                <li>• <strong>Lokasi:</strong> Lapangan Sekolah</li>
+                <li>• <strong>Ukuran Tim:</strong> Maks 5 siswa</li>
+                <li>• <strong>Range Budget:</strong> Rp 100.000 - 500.000</li>
               </ul>
             </div>
           </div>
@@ -122,7 +122,7 @@ const MarketDay = () => {
 
       {/* Business Categories */}
       <div className="mb-8">
-        <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">Business Categories</h2>
+        <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">Kategori Bisnis</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {businessCategories.map((category, index) => (
             <Card key={index} className="shadow-md hover:shadow-lg transition-shadow">
@@ -145,30 +145,30 @@ const MarketDay = () => {
       {/* Registration Section */}
       <Card className="shadow-lg">
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl text-gray-800">Join Market Day!</CardTitle>
+          <CardTitle className="text-2xl text-gray-800">Ikutan Market Day!</CardTitle>
           <CardDescription>
-            Participation is optional but highly recommended for aspiring entrepreneurs
+            Ikutan sukarela tapi sangat direkomendasi buat calon wirausahawan
           </CardDescription>
         </CardHeader>
         <CardContent>
           {!showRegistration ? (
             <div className="text-center">
               <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
-                Ready to start your entrepreneurial journey? Register your team and join this exciting activity!
+                Siap mulai perjalanan wirausaha kamu? Daftarin tim kamu dan ikutan aktivitas yang seru ini!
               </p>
               <Button 
                 size="lg"
                 onClick={() => setShowRegistration(true)}
                 className="bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-500 hover:to-amber-600"
               >
-                🛍️ Register for Market Day
+                🛍️ Daftar Market Day
               </Button>
               <div className="mt-4">
                 <Button 
                   variant="outline"
                   onClick={() => window.location.href = '/competitions'}
                 >
-                  ← Back to Competitions
+                  ← Kembali ke Lomba
                 </Button>
               </div>
             </div>
@@ -177,7 +177,7 @@ const MarketDay = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Team/Business Name *
+                    Nama Tim/Bisnis *
                   </label>
                   <input
                     type="text"
@@ -185,12 +185,12 @@ const MarketDay = () => {
                     value={registrationData.teamName}
                     onChange={(e) => setRegistrationData(prev => ({ ...prev, teamName: e.target.value }))}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
-                    placeholder="Enter your team name"
+                     placeholder="Masukin nama tim kamu"
                   />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Business Type *
+                    Jenis Bisnis *
                   </label>
                   <select
                     required
@@ -198,40 +198,40 @@ const MarketDay = () => {
                     onChange={(e) => setRegistrationData(prev => ({ ...prev, businessType: e.target.value }))}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
                   >
-                    <option value="">Select business type</option>
-                    <option value="food">Food & Beverages</option>
-                    <option value="handicraft">Handicrafts</option>
-                    <option value="services">Services</option>
-                    <option value="innovation">Innovation</option>
+                    <option value="">Pilih jenis bisnis</option>
+                    <option value="food">Makanan & Minuman</option>
+                    <option value="handicraft">Kerajinan Tangan</option>
+                    <option value="services">Jasa</option>
+                    <option value="innovation">Inovasi</option>
                   </select>
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Product/Service Description *
-                </label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Deskripsi Produk/Jasa *
+                  </label>
                 <textarea
                   required
                   value={registrationData.productDescription}
                   onChange={(e) => setRegistrationData(prev => ({ ...prev, productDescription: e.target.value }))}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
                   rows={3}
-                  placeholder="Describe what you plan to sell or offer"
+                  placeholder="Jelasin apa yang kamu rencanain buat dijual atau ditawarin"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Team Members (max 5) *
-                </label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Anggota Tim (maks 5) *
+                  </label>
                 <input
                   type="text"
                   required
                   value={registrationData.teamMembers}
                   onChange={(e) => setRegistrationData(prev => ({ ...prev, teamMembers: e.target.value }))}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
-                  placeholder="List all team member names"
+                  placeholder="Sebutin semua nama anggota tim"
                 />
               </div>
 
@@ -240,14 +240,14 @@ const MarketDay = () => {
                   type="submit"
                   className="flex-1 bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-500 hover:to-amber-600"
                 >
-                  Submit Registration
+                  Kirim Pendaftaran
                 </Button>
                 <Button
                   type="button"
                   variant="outline"
                   onClick={() => setShowRegistration(false)}
                 >
-                  Cancel
+                  Batal
                 </Button>
               </div>
             </form>

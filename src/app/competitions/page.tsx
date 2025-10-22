@@ -10,78 +10,78 @@ import { Badge } from '@/components/ui/badge';
 
 const competitions = [
   {
-    id: 'vlog',
-    title: 'Vlog Challenge',
+    id: 'mini-vlog',
+    title: 'Mini Vlog',
     path: 'vlog-challenge',
-    icon: '🎥',
-    description: 'Upload class videos directly showcasing creativity and teamwork.',
+    icon: '📹',
+    description: 'Upload video kelas langsung buat nunjukin kreativitas dan kerja sama tim.',
     type: 'video-upload',
-    categories: ['Grade VII: Classroom Introduction', 'Grade VIII: OOTD at School', 'Grade IX: School Promotion'],
+    categories: ['Kelas VII: Perkenalan Kelas', 'Kelas VIII: OOTD di Sekolah', 'Kelas IX: Promosi Sekolah'],
     requirements: [
-      'Duration: 2-6 minutes depending on category',
-      'Original content only',
-      'Follow school guidelines',
-      'One video per class'
+      'Durasi: 2-6 menit tergantung kategori',
+      'Konten original aja',
+      'Ikutin aturan sekolah',
+      'Satu video per kelas'
     ],
-    prizes: ['Recording session', 'Performance at school event', 'Certificate'],
-    deadline: 'October 27, 2025',
-    screening: 'Top 3 screening: October 28, 2025',
+    prizes: ['Sesi rekaman', 'Tampil di acara sekolah', 'Sertifikat'],
+    deadline: '27 Oktober 2025',
+    screening: 'Screening 3 terbaik: 28 Oktober 2025',
     color: 'from-orange-400 to-red-500'
   },
   {
-    id: 'comic',
-    title: 'Arabic Creative Comic',
+    id: 'komik-arab',
+    title: 'Komik Bhs Arab',
     icon: '🎨',
-    description: 'Simple registration required. Design creative comics in Arabic language.',
+    description: 'Daftar dulu gais. Desain komik kreatif bahasa Arab.',
     type: 'registration',
-    categories: ['Single Panel Comic', 'Strip Comic (3-4 panels)', 'Short Story Comic'],
+    categories: ['Komik Panel Tunggal', 'Komik Strip (3-4 panel)', 'Komik Cerita Pendek'],
     requirements: [
-      'Arabic text with proper grammar',
-      'Original artwork',
-      'Cultural themes encouraged',
-      'Digital or hand-drawn accepted'
+      'Teks Arab dengan tata bahasa bener',
+      'Karya seni original',
+      'Tema budaya dipersilakan',
+      'Digital atau gambar tangan diterima'
     ],
-    prizes: ['Art supplies kit', 'Arabic learning materials', 'Certificate'],
-    deadline: 'October 27, 2025',
-    competitionDay: 'Competition day: October 28, 2025',
+    prizes: ['Paket alat seni', 'Materi belajar Arab', 'Sertifikat'],
+    deadline: '27 Oktober 2025',
+    competitionDay: 'Hari lomba: 28 Oktober 2025',
     color: 'from-blue-400 to-cyan-500'
   },
   {
-    id: 'music',
-    title: 'Sundanese Pop Cover',
+    id: 'vocal-grup',
+    title: 'Vocal Grup',
     icon: '🎤',
-    description: 'Simple registration required. Perform modern covers of traditional Sundanese songs.',
+    description: 'Daftar dulu gais. Bawain cover modern lagu tradisional Sunda.',
     type: 'registration',
-    categories: ['Solo Performance', 'Duet/Band Performance', 'Acapella Version'],
+    categories: ['Penampilan Solo', 'Duet/Band', 'Versi Acapella'],
     requirements: [
-      'Sundanese language songs',
-      '3-5 minutes duration',
-      'Live performance or recorded video',
-      'Original arrangement encouraged'
+      'Lagu bahasa Sunda',
+      'Durasi 3-5 menit',
+      'Penampilan langsung atau video rekaman',
+      'Aransemen original dipersilakan'
     ],
-    prizes: ['Recording session', 'Performance at school event', 'Certificate'],
-    deadline: 'October 27, 2025',
-    competitionDay: 'Competition day: October 28, 2025',
+    prizes: ['Sesi rekaman', 'Tampil di acara sekolah', 'Sertifikat'],
+    deadline: '27 Oktober 2025',
+    competitionDay: 'Hari lomba: 28 Oktober 2025',
     color: 'from-green-400 to-emerald-500'
   },
   {
-    id: 'film',
-    title: 'Short Film Drama',
+    id: 'film-pendek',
+    title: 'Film Pendek',
     path: 'short-film-drama',
-    icon: '🎭',
-    description: 'Upload class films directly based on Indonesian folklore (Cerita Rakyat).',
+    icon: '🎬',
+    description: 'Upload film kelas langsung berdasarkan cerita rakyat Indonesia.',
     type: 'video-upload',
-    categories: ['Drama', 'Documentary', 'Comedy'],
+    categories: ['Drama', 'Dokumenter', 'Komedi'],
     requirements: [
-      '5-15 minutes duration',
-      'Original screenplay',
-      'Student cast and crew',
-      'Appropriate for school audience',
-      'One film per class'
+      'Durasi 5-15 menit',
+      'Skenario original',
+      'Pemeran dan kru siswa',
+      'Cocok untuk audiens sekolah',
+      'Satu film per kelas'
     ],
-    prizes: ['Film festival entry', 'Equipment rental voucher', 'Certificate'],
-    deadline: 'October 27, 2025',
-    screening: 'Top 3 screening: October 28, 2025',
+    prizes: ['Masuk festival film', 'Voucher sewa peralatan', 'Sertifikat'],
+    deadline: '27 Oktober 2025',
+    screening: 'Screening 3 terbaik: 28 Oktober 2025',
     color: 'from-purple-400 to-pink-500'
   },
   {
@@ -89,18 +89,18 @@ const competitions = [
     title: 'Market Day',
     path: 'market-day',
     icon: '🛍️',
-    description: 'Activity (optional participation). Entrepreneurial activity for students.',
+    description: 'Aktivitas (ikutannya opsional). Kewirausahaan buat siswa.',
     type: 'activity',
-    categories: ['Food & Beverages', 'Handicrafts', 'Services', 'Innovation'],
+    categories: ['Makanan & Minuman', 'Kerajinan Tangan', 'Jasa', 'Inovasi'],
     requirements: [
-      'Business plan required',
-      'Maximum 5 students per team',
+      'Perlu rencana bisnis',
+      'Maksimal 5 siswa per tim',
       'Budget: Rp 100.000 - 500.000',
-      'Sustainable practices encouraged'
+      'Praktik berkelanjutan dipersilakan'
     ],
-    prizes: ['Business mentorship', 'Seed funding', 'Certificate'],
-    deadline: 'October 27, 2025',
-    competitionDay: 'Activity day: October 28, 2025',
+    prizes: ['Mentor bisnis', 'Modal awal', 'Sertifikat'],
+    deadline: '27 Oktober 2025',
+    competitionDay: 'Hari aktivitas: 28 Oktober 2025',
     color: 'from-yellow-400 to-amber-500'
   }
 ];
@@ -110,10 +110,10 @@ export default function CompetitionsPage() {
     <main className="container mx-auto px-4 py-12">
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
-            Competition Categories
+            Kategori Lomba
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Choose your passion and showcase your talents! Each competition offers unique challenges and amazing prizes.
+             Pilih lomba favorit kamu dan unjukin bakat kamu! Tiap lomba ada tantangan seru dan hadiah keren yang nungguin!
           </p>
         </div>
 
@@ -134,7 +134,7 @@ export default function CompetitionsPage() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <h4 className="font-semibold text-gray-800 mb-2">Categories:</h4>
+                  <h4 className="font-semibold text-gray-800 mb-2">Kategori:</h4>
                   <div className="flex flex-wrap gap-2">
                     {competition.categories.map((category, index) => (
                       <Badge key={index} variant="secondary">
@@ -145,7 +145,7 @@ export default function CompetitionsPage() {
                 </div>
 
                 <div>
-                  <h4 className="font-semibold text-gray-800 mb-2">Requirements:</h4>
+                  <h4 className="font-semibold text-gray-800 mb-2">Persyaratan:</h4>
                   <ul className="text-sm text-gray-600 space-y-1">
                     {competition.requirements.map((req, index) => (
                       <li key={index} className="flex items-start">
@@ -157,7 +157,7 @@ export default function CompetitionsPage() {
                 </div>
 
                 <div>
-                  <h4 className="font-semibold text-gray-800 mb-2">Prizes:</h4>
+                  <h4 className="font-semibold text-gray-800 mb-2">Hadiah:</h4>
                   <div className="flex flex-wrap gap-2">
                     {competition.prizes.map((prize, index) => (
                       <Badge key={index} className="bg-yellow-100 text-yellow-800">
@@ -169,9 +169,9 @@ export default function CompetitionsPage() {
 
                 <div className="pt-4 border-t">
                   <div className="space-y-2 mb-4">
-                    <p className="text-sm font-semibold text-red-600">
-                      📅 Deadline: {competition.deadline}
-                    </p>
+                     <p className="text-sm font-semibold text-red-600">
+                       📅 Batas Waktu: {competition.deadline}
+                     </p>
                     {competition.screening && (
                       <p className="text-sm font-semibold text-blue-600">
                         🎬 {competition.screening}
@@ -199,9 +199,9 @@ export default function CompetitionsPage() {
                       }}
                     >
                       {competition.type === 'video-upload' ? 'Upload Video' : 
-                       competition.type === 'registration' ? 'Register Now' : 
-                       competition.type === 'activity' ? 'View Activity' : 
-                       'Learn More'}
+                       competition.type === 'registration' ? 'Daftar Sekarang' : 
+                       competition.type === 'activity' ? 'Lihat Aktivitas' : 
+                       'Pelajari Lebih Lanjut'}
                     </Button>
                   </div>
                 </div>
@@ -212,11 +212,11 @@ export default function CompetitionsPage() {
 
         <div className="text-center bg-white rounded-2xl shadow-lg p-8">
           <h2 className="text-2xl font-bold text-gray-800 mb-4">
-            Ready to Join?
+            Siap Ikutan?
           </h2>
           <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
-            Don&apos;t miss this opportunity to showcase your talents and win amazing prizes! 
-            Register your team and start preparing for the competition.
+             Jangan sampe ketinggalan kesempatan buat unjukin bakat kamu dan menang hadiah keren! 
+            Daftarin tim kamu dan mulai persiapan buat lomba.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button 
@@ -224,14 +224,14 @@ export default function CompetitionsPage() {
               className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600"
               onClick={() => window.location.href = '/register'}
             >
-              📝 Register Your Team
+              📝 Daftarin Tim Lo
             </Button>
             <Button 
               size="lg"
               variant="outline"
               onClick={() => window.location.href = '/contact'}
             >
-              💬 Ask Questions
+              💬 Tanya-Tanya
             </Button>
           </div>
         </div>

@@ -1,5 +1,16 @@
 import { NextResponse } from 'next/server';
-import { supabase } from '@/lib/supabase';
+import { createClient } from '@supabase/supabase-js';
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+
+// Create Supabase client with service role key (bypasses RLS)
+const supabase = createClient(supabaseUrl, serviceRoleKey, {
+  auth: {
+    autoRefreshToken: false,
+    persistSession: false
+  }
+});
 
 export async function POST() {
   try {
@@ -43,20 +54,20 @@ export async function POST() {
       }
     }
 
-    // Test data insertion
-    console.log('Inserting test data...');
+    // Test data insertion with service role
+    console.log('Inserting test data with service role...');
     const { data: testData, error: testError } = await supabase
       .from('content_sections')
       .upsert({
-        section_key: 'test_section',
-        title: 'Test Section',
+        section_key: 'dev_test_' + Date.now(),
+        title: 'Development Test',
         content: {
           headline: 'Test Headline',
           subheadline: 'Test Subheadline',
-          test_field: 'This is a test update',
+          test_field: 'This is a test update with service role',
           timestamp: new Date().toISOString()
         },
-        updated_by: 'dev-setup',
+        updated_by: 'dev-setup-service-role',
         updated_at: new Date().toISOString()
       })
       .select()

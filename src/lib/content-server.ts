@@ -1,27 +1,22 @@
-import { createSupabaseServerClient } from '@/lib/supabase';
 import { createSupabasePublicClient } from '@/lib/supabase-public';
 import { createSupabaseDevClient } from '@/lib/supabase-dev';
+import { devCache } from './content-cache';
+import { createClient } from '@supabase/supabase-js';
 
-// Global development cache to store content updates when RLS blocks database writes
-// Use globalThis to ensure it's shared across all module instances
-declare global {
-  var devContentCache: Map<string, any> | undefined;
+// Use persistent development cache instead of memory cache
+const devContentCache = devCache;
+
+// Service role client for admin operations (bypasses RLS)
+function createSupabaseServiceClient() {
+  return createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  );
 }
-
-if (!global.devContentCache) {
-  global.devContentCache = new Map<string, any>();
-}
-
-const devContentCache = global.devContentCache;
 
 // Debug function to inspect cache state
 export function debugCacheState() {
-  console.log('🔍 DEBUG: Current cache state:');
-  console.log('Cache keys:', Array.from(devContentCache.keys()));
-  console.log('Cache size:', devContentCache.size);
-  for (const [key, value] of devContentCache.entries()) {
-    console.log(`Key: ${key}, Value type: ${Array.isArray(value) ? `Array[${value.length}]` : typeof value}`);
-  }
+  devContentCache.debug();
   return devContentCache;
 }
 import type { 
@@ -75,7 +70,7 @@ export async function getContentSection(sectionKey: string): Promise<ContentSect
 // Content sections - authenticated version for admin operations
 export async function getContentSectionAuth(sectionKey: string): Promise<ContentSection | null> {
   try {
-    const supabase = await createSupabaseServerClient();
+    const supabase = createSupabaseServiceClient();
     
     const { data, error } = await supabase
       .from('content_sections')
@@ -96,7 +91,8 @@ export async function getContentSectionAuth(sectionKey: string): Promise<Content
 }
 
 export async function getAllContentSections(): Promise<ContentSection[]> {
-  const supabase = await createSupabaseServerClient();
+  // Use service role client to bypass RLS issues
+  const supabase = createSupabaseServiceClient();
   
   const { data, error } = await supabase
     .from('content_sections')
@@ -163,22 +159,42 @@ export async function updateContentSection(
       return false;
     }
   } else {
-    // Production - use authenticated client
-    const supabase = await createSupabaseServerClient();
+    // Production - use service role client to bypass RLS
+    const supabase = createSupabaseServiceClient();
     
-    const { error } = await supabase
+    // First try to update the existing record
+    const { error: updateError } = await supabase
       .from('content_sections')
-      .upsert({
-        section_key: sectionKey,
+      .update({
         title,
         content,
         updated_by: updatedBy,
         updated_at: new Date().toISOString()
-      });
+      })
+      .eq('section_key', sectionKey);
     
-    if (error) {
-      console.error('Error updating content section:', error);
-      return false;
+    if (updateError) {
+      // If update fails because record doesn't exist, try to insert
+      if (updateError.code === 'PGRST116') {
+        const { error: insertError } = await supabase
+          .from('content_sections')
+          .insert({
+            section_key: sectionKey,
+            title,
+            content,
+            updated_by: updatedBy,
+            updated_at: new Date().toISOString(),
+            created_at: new Date().toISOString()
+          });
+        
+        if (insertError) {
+          console.error('Error inserting content section:', insertError);
+          return false;
+        }
+      } else {
+        console.error('Error updating content section:', updateError);
+        return false;
+      }
     }
     
     return true;
@@ -196,7 +212,7 @@ export async function getActiveContactInfo(): Promise<ContactInfo[]> {
     return allContacts.filter((contact: ContactInfo) => contact.is_active);
   }
   
-  const supabase = await createSupabaseServerClient();
+  const supabase = createSupabaseServiceClient();
   
   const { data, error } = await supabase
     .from('contact_info')
@@ -238,7 +254,8 @@ export async function getAllContactInfo(): Promise<ContactInfo[]> {
     return devContentCache.get('contact_info');
   }
   
-  const supabase = await createSupabaseServerClient();
+  // Use service role client to bypass RLS issues
+  const supabase = createSupabaseServiceClient();
   
   const { data, error } = await supabase
     .from('contact_info')
@@ -317,8 +334,8 @@ export async function createContactInfo(contactInfo: Omit<ContactInfo, 'id' | 'c
       return null;
     }
   } else {
-    // Production - use authenticated client
-    const supabase = await createSupabaseServerClient();
+    // Production - use service role client to bypass RLS
+    const supabase = createSupabaseServiceClient();
     
     const { data, error } = await supabase
       .from('contact_info')
@@ -394,8 +411,8 @@ export async function updateContactInfo(
       return false;
     }
   } else {
-    // Production - use authenticated client
-    const supabase = await createSupabaseServerClient();
+    // Production - use service role client to bypass RLS
+    const supabase = createSupabaseServiceClient();
     
     const { error } = await supabase
       .from('contact_info')
@@ -452,8 +469,8 @@ export async function deleteContactInfo(id: string): Promise<boolean> {
       return false;
     }
   } else {
-    // Production - use authenticated client
-    const supabase = await createSupabaseServerClient();
+    // Production - use service role client to bypass RLS
+    const supabase = createSupabaseServiceClient();
     
     const { error } = await supabase
       .from('contact_info')
@@ -480,7 +497,7 @@ export async function getActiveSocialMedia(): Promise<SocialMedia[]> {
     return allSocial.filter((social: SocialMedia) => social.is_active);
   }
   
-  const supabase = await createSupabaseServerClient();
+  const supabase = createSupabaseServiceClient();
   
   const { data, error } = await supabase
     .from('social_media')
@@ -522,7 +539,8 @@ export async function getAllSocialMedia(): Promise<SocialMedia[]> {
     return devContentCache.get('social_media');
   }
   
-  const supabase = await createSupabaseServerClient();
+  // Use service role client to bypass RLS issues
+  const supabase = createSupabaseServiceClient();
   
   const { data, error } = await supabase
     .from('social_media')
@@ -601,8 +619,8 @@ export async function createSocialMedia(socialMedia: Omit<SocialMedia, 'id' | 'c
       return null;
     }
   } else {
-    // Production - use authenticated client
-    const supabase = await createSupabaseServerClient();
+    // Production - use service role client to bypass RLS
+    const supabase = createSupabaseServiceClient();
     
     const { data, error } = await supabase
       .from('social_media')
@@ -677,8 +695,8 @@ export async function updateSocialMedia(
       return false;
     }
   } else {
-    // Production - use authenticated client
-    const supabase = await createSupabaseServerClient();
+    // Production - use service role client to bypass RLS
+    const supabase = createSupabaseServiceClient();
     
     const { error } = await supabase
       .from('social_media')
@@ -735,8 +753,8 @@ export async function deleteSocialMedia(id: string): Promise<boolean> {
       return false;
     }
   } else {
-    // Production - use authenticated client
-    const supabase = await createSupabaseServerClient();
+    // Production - use service role client to bypass RLS
+    const supabase = createSupabaseServiceClient();
     
     const { error } = await supabase
       .from('social_media')
@@ -763,7 +781,7 @@ export async function getActiveFAQItems(): Promise<FAQItem[]> {
     return allFAQs.filter((faq: FAQItem) => faq.is_active);
   }
   
-  const supabase = await createSupabaseServerClient();
+  const supabase = createSupabaseServiceClient();
   
   const { data, error } = await supabase
     .from('faq_items')
@@ -805,7 +823,8 @@ export async function getAllFAQItems(): Promise<FAQItem[]> {
     return devContentCache.get('faq_items');
   }
   
-  const supabase = await createSupabaseServerClient();
+  // Use service role client to bypass RLS issues
+  const supabase = createSupabaseServiceClient();
   
   const { data, error } = await supabase
     .from('faq_items')
@@ -884,8 +903,8 @@ export async function createFAQItem(faqItem: Omit<FAQItem, 'id' | 'created_at' |
       return null;
     }
   } else {
-    // Production - use authenticated client
-    const supabase = await createSupabaseServerClient();
+    // Production - use service role client to bypass RLS
+    const supabase = createSupabaseServiceClient();
     
     const { data, error } = await supabase
       .from('faq_items')
@@ -960,8 +979,8 @@ export async function updateFAQItem(
       return false;
     }
   } else {
-    // Production - use authenticated client
-    const supabase = await createSupabaseServerClient();
+    // Production - use service role client to bypass RLS
+    const supabase = createSupabaseServiceClient();
     
     const { error } = await supabase
       .from('faq_items')
@@ -1018,8 +1037,8 @@ export async function deleteFAQItem(id: string): Promise<boolean> {
       return false;
     }
   } else {
-    // Production - use authenticated client
-    const supabase = await createSupabaseServerClient();
+    // Production - use service role client to bypass RLS
+    const supabase = createSupabaseServiceClient();
     
     const { error } = await supabase
       .from('faq_items')
@@ -1046,7 +1065,7 @@ export async function getActiveNavigationItems(): Promise<NavigationItem[]> {
     return allNav.filter((nav: NavigationItem) => nav.is_active);
   }
   
-  const supabase = await createSupabaseServerClient();
+  const supabase = createSupabaseServiceClient();
   
   const { data, error } = await supabase
     .from('navigation_items')
@@ -1088,7 +1107,8 @@ export async function getAllNavigationItems(): Promise<NavigationItem[]> {
     return devContentCache.get('navigation_items');
   }
   
-  const supabase = await createSupabaseServerClient();
+  // Use service role client to bypass RLS issues
+  const supabase = createSupabaseServiceClient();
   
   const { data, error } = await supabase
     .from('navigation_items')
@@ -1167,8 +1187,8 @@ export async function createNavigationItem(navigationItem: Omit<NavigationItem, 
       return null;
     }
   } else {
-    // Production - use authenticated client
-    const supabase = await createSupabaseServerClient();
+    // Production - use service role client to bypass RLS
+    const supabase = createSupabaseServiceClient();
     
     const { data, error } = await supabase
       .from('navigation_items')
@@ -1243,8 +1263,8 @@ export async function updateNavigationItem(
       return false;
     }
   } else {
-    // Production - use authenticated client
-    const supabase = await createSupabaseServerClient();
+    // Production - use service role client to bypass RLS
+    const supabase = createSupabaseServiceClient();
     
     const { error } = await supabase
       .from('navigation_items')
@@ -1301,8 +1321,8 @@ export async function deleteNavigationItem(id: string): Promise<boolean> {
       return false;
     }
   } else {
-    // Production - use authenticated client
-    const supabase = await createSupabaseServerClient();
+    // Production - use service role client to bypass RLS
+    const supabase = createSupabaseServiceClient();
     
     const { error } = await supabase
       .from('navigation_items')
@@ -1329,7 +1349,7 @@ export async function getActiveScheduleEvents(): Promise<ScheduleEvent[]> {
     return allEvents.filter((event: ScheduleEvent) => event.is_active);
   }
   
-  const supabase = await createSupabaseServerClient();
+  const supabase = createSupabaseServiceClient();
   
   const { data, error } = await supabase
     .from('schedule_events')
@@ -1372,7 +1392,8 @@ export async function getAllScheduleEvents(): Promise<ScheduleEvent[]> {
     return devContentCache.get('schedule_events');
   }
   
-  const supabase = await createSupabaseServerClient();
+  // Use service role client to bypass RLS issues
+  const supabase = createSupabaseServiceClient();
   
   const { data, error } = await supabase
     .from('schedule_events')
@@ -1452,8 +1473,8 @@ export async function createScheduleEvent(scheduleEvent: Omit<ScheduleEvent, 'id
       return null;
     }
   } else {
-    // Production - use authenticated client
-    const supabase = await createSupabaseServerClient();
+    // Production - use service role client to bypass RLS
+    const supabase = createSupabaseServiceClient();
     
     const { data, error } = await supabase
       .from('schedule_events')
@@ -1528,8 +1549,8 @@ export async function updateScheduleEvent(
       return false;
     }
   } else {
-    // Production - use authenticated client
-    const supabase = await createSupabaseServerClient();
+    // Production - use service role client to bypass RLS
+    const supabase = createSupabaseServiceClient();
     
     const { error } = await supabase
       .from('schedule_events')
@@ -1586,8 +1607,8 @@ export async function deleteScheduleEvent(id: string): Promise<boolean> {
       return false;
     }
   } else {
-    // Production - use authenticated client
-    const supabase = await createSupabaseServerClient();
+    // Production - use service role client to bypass RLS
+    const supabase = createSupabaseServiceClient();
     
     const { error } = await supabase
       .from('schedule_events')

@@ -106,24 +106,24 @@ export default function ContactPage() {
   // Fallback FAQs in case API fails
   const fallbackFAQs = [
     {
-      question: 'How do I register for the competitions?',
-      answer: 'You can register through the registration page on our website. Fill out the team registration form with all required information.'
+      question: 'Gimana cara daftar lombanya?',
+      answer: 'Loe bisa daftar lewat halaman pendaftaran di website kita. Isi formulir pendaftaran tim dengan semua info yang dibutuhin.'
     },
     {
-      question: 'What are the age requirements?',
-      answer: 'The competitions are open to students in Grade VII, VIII, and IX (approximately 13-15 years old).'
+      question: 'Syarat usianya berapa?',
+      answer: 'Lomba ini buka buat siswa Kelas VII, VIII, dan IX (kira-kira 13-15 tahun).'
     },
     {
-      question: 'Can I participate in multiple competitions?',
-      answer: 'Yes! You can register for multiple competitions as long as you meet the requirements for each category.'
+      question: 'Bisa ikut beberapa lomba sekaligus?',
+      answer: 'Bisa! Lo bisa daftar beberapa lomba asal memenuhi syarat tiap kategori.'
     },
     {
-      question: 'Is there a registration fee?',
-      answer: 'No, participation in all competitions is free of charge.'
+      question: 'Ada biaya pendaftarannya?',
+      answer: 'Enggak, ikut semua lomba gratis.'
     },
     {
-      question: 'How do I submit my work?',
-      answer: 'Online submissions can be uploaded through our website. Offline competitions require in-person registration at the venue.'
+      question: 'Gimana cara kirim karyanya?',
+      answer: 'Karya online bisa diupload lewat website kita. Lomba offline perlu daftar langsung di lokasi.'
     }
   ];
 
@@ -133,11 +133,11 @@ export default function ContactPage() {
     <main className="container mx-auto px-4 py-12">
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
-            Contact Us
+            Hubungi Kita
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Have questions about the competitions? We&apos;re here to help! 
-            Reach out to us through any of the following channels.
+            Ada pertanyaan tentang lomba? Kita siap bantu! 
+            Hubungi kita lewat saluran mana aja di bawah ini.
           </p>
         </div>
 
@@ -145,9 +145,9 @@ export default function ContactPage() {
           {/* Contact Form */}
           <Card className="shadow-xl">
             <CardHeader>
-              <CardTitle className="text-2xl">Send us a Message</CardTitle>
+              <CardTitle className="text-2xl">Kirim Pesan ke Kita</CardTitle>
               <CardDescription>
-                Fill out the form below and we&apos;ll get back to you as soon as possible.
+                Isi formulir di bawah dan kita bakal balas secepatnya.
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -162,31 +162,31 @@ export default function ContactPage() {
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <Label htmlFor="name">Full Name *</Label>
+                    <Label htmlFor="name">Nama Lengkap *</Label>
                     <Input
                       id="name"
                       value={formData.name}
                       onChange={(e) => handleInputChange('name', e.target.value)}
-                      placeholder="Enter your full name"
+                      placeholder="Masukin nama lengkap kamu"
                       required
                     />
                   </div>
                   
                   <div>
-                    <Label htmlFor="email">Email Address *</Label>
+                    <Label htmlFor="email">Alamat Email *</Label>
                     <Input
                       id="email"
                       type="email"
                       value={formData.email}
                       onChange={(e) => handleInputChange('email', e.target.value)}
-                      placeholder="your@email.com"
+                       placeholder="email@kamu.com"
                       required
                     />
                   </div>
                 </div>
 
                 <div>
-                  <Label htmlFor="phone">Phone Number</Label>
+                  <Label htmlFor="phone">Nomor HP</Label>
                   <Input
                     id="phone"
                     value={formData.phone}
@@ -196,28 +196,28 @@ export default function ContactPage() {
                 </div>
 
                 <div>
-                  <Label htmlFor="subject">Subject *</Label>
+                  <Label htmlFor="subject">Subjek *</Label>
                   <Select value={formData.subject} onValueChange={(value) => handleInputChange('subject', value)}>
                     <SelectTrigger>
-                      <SelectValue placeholder="Select a subject" />
+                      <SelectValue placeholder="Pilih subjek" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="registration">Registration Question</SelectItem>
-                      <SelectItem value="competition">Competition Details</SelectItem>
-                      <SelectItem value="technical">Technical Support</SelectItem>
-                      <SelectItem value="partnership">Partnership Inquiry</SelectItem>
-                      <SelectItem value="other">Other</SelectItem>
+                      <SelectItem value="registration">Pertanyaan Pendaftaran</SelectItem>
+                      <SelectItem value="competition">Detail Lomba</SelectItem>
+                      <SelectItem value="technical">Bantuan Teknis</SelectItem>
+                      <SelectItem value="partnership">Kerja Sama</SelectItem>
+                      <SelectItem value="other">Lainnya</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
 
                 <div>
-                  <Label htmlFor="message">Message *</Label>
+                  <Label htmlFor="message">Pesan *</Label>
                   <Textarea
                     id="message"
                     value={formData.message}
                     onChange={(e) => handleInputChange('message', e.target.value)}
-                    placeholder="Tell us how we can help you..."
+                     placeholder="Ceritain gimana kita bisa bantu kamu..."
                     rows={5}
                     required
                   />
@@ -228,7 +228,7 @@ export default function ContactPage() {
                   disabled={isSubmitting}
                   className="w-full bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-bold"
                 >
-                  {isSubmitting ? 'Sending...' : 'Send Message'}
+                  {isSubmitting ? 'Lagi Kirim...' : 'Kirim Pesan'}
                 </Button>
               </form>
             </CardContent>
@@ -238,7 +238,7 @@ export default function ContactPage() {
           <div className="space-y-6">
             <Card className="shadow-lg">
               <CardHeader>
-                <CardTitle className="text-xl">Contact Information</CardTitle>
+                <CardTitle className="text-xl">Info Kontak</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 {contactInfo.map((info, index) => (
@@ -258,17 +258,17 @@ export default function ContactPage() {
             {/* Social Media */}
             <Card className="shadow-lg">
               <CardHeader>
-                <CardTitle className="text-xl">Follow Us</CardTitle>
+                <CardTitle className="text-xl">Ikuti Kita</CardTitle>
                 <CardDescription>
-                  Stay updated with latest news and announcements
+                  Tetep update dengan berita dan pengumuman terbaru
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 {loading ? (
-                  <div className="flex items-center justify-center py-4">
-                    <Loader2 className="h-5 w-5 animate-spin mr-2" />
-                    <span>Loading social media links...</span>
-                  </div>
+                   <div className="flex items-center justify-center py-4">
+                     <Loader2 className="h-5 w-5 animate-spin mr-2" />
+                     <span>Lagi muat link sosmed...</span>
+                   </div>
                 ) : (
                   <div className="grid grid-cols-2 gap-3">
                     {socialMedia.map((social, index) => (
@@ -292,21 +292,21 @@ export default function ContactPage() {
         {/* FAQ Section */}
         <Card className="shadow-xl">
           <CardHeader>
-            <CardTitle className="text-2xl text-center">Frequently Asked Questions</CardTitle>
+            <CardTitle className="text-2xl text-center">Pertanyaan yang Sering Diajukan</CardTitle>
             <CardDescription className="text-center">
-              Quick answers to common questions about the competitions
+              Jawaban cepat untuk pertanyaan umum tentang lomba
             </CardDescription>
           </CardHeader>
           <CardContent>
             {faqLoading ? (
               <div className="flex items-center justify-center py-8">
                 <Loader2 className="h-6 w-6 animate-spin mr-2" />
-                <span>Loading FAQ...</span>
+                <span>Lagi muat FAQ...</span>
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {faqs.map((faq, index) => (
-                  <div key={faq.id || index} className="border-l-4 border-orange-500 pl-4">
+                  <div key={(faq as any).id || index} className="border-l-4 border-orange-500 pl-4">
                     <h4 className="font-semibold text-gray-800 mb-2">{faq.question}</h4>
                     <p className="text-sm text-gray-600">{faq.answer}</p>
                   </div>
@@ -316,13 +316,13 @@ export default function ContactPage() {
             
             <div className="text-center mt-8">
               <p className="text-gray-600 mb-4">
-                Still have questions? Don&apos;t hesitate to reach out to us!
+                Masih ada pertanyaan? Jangan ragu hubungi kita!
               </p>
               <Button 
                 onClick={() => window.location.href = '/register'}
                 className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600"
               >
-                📝 Register Now
+                📝 Daftar Sekarang
               </Button>
             </div>
           </CardContent>

@@ -82,18 +82,18 @@ const ShortFilmDrama = () => {
       );
     } catch (error) {
       console.error('Failed to fetch submissions:', error);
-      setUploadMessage('Failed to load existing submissions');
+      setUploadMessage('Gagal muat submission yang ada');
     }
   };
 
   const getStatusBadge = (status: ClassVideo['status']) => {
     switch (status) {
       case 'not-uploaded':
-        return <Badge variant="secondary" className="bg-gray-100 text-gray-600">Not Uploaded</Badge>;
+        return <Badge variant="secondary" className="bg-gray-100 text-gray-600">Belum Upload</Badge>;
       case 'under-review':
-        return <Badge variant="secondary" className="bg-yellow-100 text-yellow-700">Under Review</Badge>;
+        return <Badge variant="secondary" className="bg-yellow-100 text-yellow-700">Dalam Review</Badge>;
       case 'published':
-        return <Badge variant="secondary" className="bg-green-100 text-green-700">Published</Badge>;
+        return <Badge variant="secondary" className="bg-green-100 text-green-700">Diterbitkan</Badge>;
     }
   };
 
@@ -128,12 +128,12 @@ const ShortFilmDrama = () => {
   const handleSubmitUpload = async (className: string) => {
     const form = uploadForm[className];
     if (!form?.file || !form?.title) {
-      setUploadMessage('Please select a file and enter a title');
+      setUploadMessage('Pilih file dan masukin judul dulu');
       return;
     }
 
     try {
-      setUploadMessage('Uploading short film...');
+      setUploadMessage('Lagi upload film pendek...');
       setUploadProgress(prev => ({ ...prev, [className]: 0 }));
 
       const formData = new FormData();
@@ -184,13 +184,13 @@ const ShortFilmDrama = () => {
           [className]: { show: false, file: null, title: '', description: '' }
         }));
 
-        setUploadMessage('Short film uploaded successfully! It will be reviewed shortly.');
+        setUploadMessage('Film pendek berhasil diupload! Bakal direview segera.');
       } else {
-        setUploadMessage(`Upload failed: ${data.error}`);
+        setUploadMessage(`Upload gagal: ${data.error}`);
       }
     } catch (error) {
       console.error('Upload error:', error);
-      setUploadMessage('Upload failed. Please try again.');
+      setUploadMessage('Upload gagal. Coba lagi ya.');
     } finally {
       setUploadProgress(prev => ({ ...prev, [className]: 0 }));
       
@@ -209,10 +209,10 @@ const ShortFilmDrama = () => {
     <main className="container mx-auto px-4 py-12">
       <div className="text-center mb-12">
         <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
-          🎭 Short Film Drama (Cerita Rakyat)
+          🎬 Film Pendek (Cerita Rakyat)
         </h1>
         <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-          Submit your class short film based on Indonesian folklore! Each class should create a compelling drama that showcases our cultural heritage.
+          Upload film pendek kelas kamu berdasarkan cerita rakyat Indonesia! Setiap kelas harus bikin drama yang seru dan nunjukin warisan budaya kita.
         </p>
       </div>
 
@@ -234,7 +234,7 @@ const ShortFilmDrama = () => {
             <CardHeader>
               <CardTitle className="text-2xl text-gray-800">{grade}</CardTitle>
               <CardDescription>
-                Click &ldquo;Upload Film&rdquo; to submit your class short film drama
+                Klik &ldquo;Upload Film&rdquo; buat kirim film drama pendek kelas kamu
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -265,18 +265,18 @@ const ShortFilmDrama = () => {
                     {classItem.status === 'under-review' && (
                       <div className="mb-3 p-3 bg-yellow-50 rounded">
                         <p className="text-sm text-yellow-700">
-                          🎬 Under review by {classItem.picName}
+                           🎬 Direview oleh {classItem.picName}
                         </p>
-                        <p className="text-xs text-yellow-600">Uploaded: {classItem.uploadDate}</p>
+                         <p className="text-xs text-yellow-600">Diupload: {classItem.uploadDate}</p>
                       </div>
                     )}
 
                     {uploadForm[classItem.className]?.show ? (
                       <div className="space-y-3">
                         <div>
-                          <Label htmlFor={`file-${classItem.className}`} className="text-sm font-medium">
-                            Film File
-                          </Label>
+                           <Label htmlFor={`file-${classItem.className}`} className="text-sm font-medium">
+                             File Film
+                           </Label>
                           <Input
                             id={`file-${classItem.className}`}
                             type="file"
@@ -284,28 +284,28 @@ const ShortFilmDrama = () => {
                             onChange={(e) => e.target.files?.[0] && handleFileChange(classItem.className, e.target.files[0])}
                             className="mt-1"
                           />
-                          <p className="text-xs text-gray-500 mt-1">Max size: 100MB. Formats: MP4, AVI, MOV, WMV, WebM</p>
+                           <p className="text-xs text-gray-500 mt-1">Max size: 750MB. Formats: MP4, AVI, MOV, WMV, WebM</p>
                         </div>
                         <div>
-                          <Label htmlFor={`title-${classItem.className}`} className="text-sm font-medium">
-                            Film Title *
-                          </Label>
+                           <Label htmlFor={`title-${classItem.className}`} className="text-sm font-medium">
+                             Judul Film *
+                           </Label>
                           <Input
                             id={`title-${classItem.className}`}
                             type="text"
-                            placeholder="Enter film title"
+                            placeholder="Masukin judul film"
                             value={uploadForm[classItem.className]?.title || ''}
                             onChange={(e) => handleTitleChange(classItem.className, e.target.value)}
                             className="mt-1"
                           />
                         </div>
                         <div>
-                          <Label htmlFor={`description-${classItem.className}`} className="text-sm font-medium">
-                            Synopsis (Optional)
-                          </Label>
+                           <Label htmlFor={`description-${classItem.className}`} className="text-sm font-medium">
+                             Sinopsis (Opsional)
+                           </Label>
                           <textarea
                             id={`description-${classItem.className}`}
-                            placeholder="Brief synopsis of your folklore drama"
+                             placeholder="Sinopsis singkat drama cerita rakyat kamu"
                             value={uploadForm[classItem.className]?.description || ''}
                             onChange={(e) => handleDescriptionChange(classItem.className, e.target.value)}
                             className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -316,7 +316,7 @@ const ShortFilmDrama = () => {
                         {uploadProgress[classItem.className] > 0 && (
                           <div className="space-y-2">
                             <div className="flex justify-between text-xs text-gray-600">
-                              <span>Uploading...</span>
+                              <span>Lagi upload...</span>
                               <span>{uploadProgress[classItem.className]}%</span>
                             </div>
                             <Progress value={uploadProgress[classItem.className]} className="h-2" />
@@ -330,7 +330,7 @@ const ShortFilmDrama = () => {
                             className="flex-1"
                             disabled={uploadProgress[classItem.className] > 0}
                           >
-                            {uploadProgress[classItem.className] > 0 ? 'Uploading...' : 'Submit'}
+                             {uploadProgress[classItem.className] > 0 ? 'Lagi upload...' : 'Kirim'}
                           </Button>
                           <Button
                             size="sm"
@@ -352,9 +352,9 @@ const ShortFilmDrama = () => {
                         className="w-full"
                         disabled={classItem.status !== 'not-uploaded'}
                       >
-                        {classItem.status === 'not-uploaded' ? '📤 Upload Film' : 
-                         classItem.status === 'under-review' ? '⏳ Under Review' : 
-                         '✅ Published'}
+                         {classItem.status === 'not-uploaded' ? '📤 Upload Film' : 
+                          classItem.status === 'under-review' ? '⏳ Dalam Review' : 
+                          '✅ Diterbitkan'}
                       </Button>
                     )}
                   </div>
@@ -366,18 +366,18 @@ const ShortFilmDrama = () => {
       </div>
 
       <div className="mt-12 text-center">
-        <Button 
-          variant="outline" 
-          onClick={() => window.location.href = '/competitions'}
-          className="mr-4"
-        >
-          ← Back to Competitions
-        </Button>
-        <Button 
-          onClick={() => window.location.href = '/gallery'}
-        >
-          📷 View Gallery →
-        </Button>
+         <Button 
+           variant="outline" 
+           onClick={() => window.location.href = '/competitions'}
+           className="mr-4"
+         >
+           ← Kembali ke Lomba
+         </Button>
+         <Button 
+           onClick={() => window.location.href = '/gallery'}
+         >
+           📷 Lihat Gallery →
+         </Button>
       </div>
     </main>
   );

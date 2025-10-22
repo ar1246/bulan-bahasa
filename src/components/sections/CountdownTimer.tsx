@@ -41,30 +41,30 @@ const CountdownTimer = () => {
   const getPhaseMessage = () => {
     switch (currentPhase) {
       case 'upcoming':
-        return 'COMPETITION BEGINS IN:';
+        return 'LOMBA DIMULAI DALAM: ⏰';
       case 'vlog-submission':
-        return 'VLOG SUBMISSION PERIOD -';
+        return 'PERIODE UPLOAD VLOG - 📹';
       case 'film-submission':
-        return 'SHORT FILM SUBMISSION PERIOD -';
+        return 'PERIODE UPLOAD FILM - 🎬';
       case 'offline-events':
-        return 'OFFLINE COMPETITIONS IN PROGRESS';
+        return 'LOMBA OFFLINE SEDANG BERJALAN 🔥';
       case 'judging':
-        return 'JUDGING IN PROGRESS';
+        return 'LAGI DINILAI NIH 📝';
       case 'completed':
-        return 'COMPETITION COMPLETED! 🎉';
+        return 'LOMBA SELESAI! MANTAP! 🎉';
       default:
-        return 'COMPETITION BEGINS IN:';
+        return 'LOMBA DIMULAI DALAM: ⏰';
     }
   };
 
   const TimeUnit = ({ value, label }: { value: number; label: string }) => (
     <div className="flex flex-col items-center">
-      <div className="bg-white/90 backdrop-blur-sm rounded-xl p-4 min-w-[80px] shadow-lg">
-        <span className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent">
+      <div className="bg-white/90 backdrop-blur-sm rounded-xl p-3 sm:p-4 min-w-[60px] sm:min-w-[80px] shadow-lg">
+        <span className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent">
           {value.toString().padStart(2, '0')}
         </span>
       </div>
-      <span className="text-sm font-medium text-gray-600 mt-2">{label}</span>
+      <span className="text-xs sm:text-sm font-medium text-gray-600 mt-1 sm:mt-2">{label.toUpperCase()}</span>
     </div>
   );
 
@@ -72,16 +72,16 @@ const CountdownTimer = () => {
     <section className="py-12 bg-gradient-to-r from-blue-600 to-purple-600">
       <div className="container mx-auto px-4">
         <div className="text-center mb-8">
-          <h2 className="text-2xl md:text-3xl font-bold text-white">
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white">
             {getPhaseMessage()}
           </h2>
         </div>
         
-        <div className="flex justify-center space-x-4 md:space-x-8">
-          <TimeUnit value={timeLeft.days} label="DAYS" />
-          <TimeUnit value={timeLeft.hours} label="HOURS" />
-          <TimeUnit value={timeLeft.minutes} label="MINUTES" />
-          <TimeUnit value={timeLeft.seconds} label="SECONDS" />
+        <div className="flex justify-center space-x-2 sm:space-x-4 md:space-x-8">
+          <TimeUnit value={timeLeft.days} label="HARI" />
+          <TimeUnit value={timeLeft.hours} label="JAM" />
+          <TimeUnit value={timeLeft.minutes} label="MENIT" />
+          <TimeUnit value={timeLeft.seconds} label="DETIK" />
         </div>
       </div>
     </section>

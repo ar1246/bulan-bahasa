@@ -37,8 +37,10 @@ const ClassCompetitionManagement = () => {
   });
 
   const competitions = [
-    'Arabic Creative Comic',
-    'Sundanese Pop Cover', 
+    'Film Pendek',
+    'Mini Vlog',
+    'Vocal Grup',
+    'Komik Bhs Arab',
     'Market Day'
   ];
 
@@ -54,11 +56,32 @@ const ClassCompetitionManagement = () => {
 
   const fetchRegistrations = async () => {
     try {
-      const response = await fetch('/api/register');
-      const data = await response.json();
+      console.log('Fetching registrations...');
       
-      if (data.success) {
-        setRegistrations(data.registrations);
+      // Directly use public API with transformation (temporary fix)
+      const fallbackResponse = await fetch('/api/register');
+      const fallbackData = await fallbackResponse.json();
+      
+      console.log('API response:', fallbackData);
+      
+      if (fallbackData.success) {
+        console.log('Raw fallback data:', fallbackData.registrations);
+        // Transform the data to match expected format
+        const transformed = fallbackData.registrations.map((reg: any, index: number) => {
+          const transformedReg = {
+            id: reg.id || `reg-${index + 1}`,
+            pic_name: reg.pic_name,
+            class: reg.class,
+            phone_number: reg.phone_number,
+            competition_category: reg.competition_category,
+            registration_date: reg.timestamp, // Map timestamp to registration_date
+            status: 'confirmed'
+          };
+          console.log('Transformed registration:', transformedReg);
+          return transformedReg;
+        });
+        console.log('Setting registrations:', transformed);
+        setRegistrations(transformed);
       } else {
         setMessage('Failed to fetch registrations');
       }
@@ -120,6 +143,30 @@ const ClassCompetitionManagement = () => {
     }
   };
 
+  const handleStatusUpdate = async (registrationId: string, newStatus: 'confirmed' | 'pending') => {
+    try {
+      const response = await fetch(`/api/admin/class-registrations/${registrationId}/status`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ status: newStatus }),
+      });
+
+      const data = await response.json();
+      
+      if (data.success) {
+        setMessage(`Registration status updated to ${newStatus}`);
+        fetchRegistrations();
+      } else {
+        setMessage(`Failed to update status: ${data.error}`);
+      }
+    } catch (error) {
+      console.error('Error updating status:', error);
+      setMessage('Error updating status');
+    }
+  };
+
   // Filter and sort registrations
   const filteredRegistrations = registrations
     .filter(registration => {
@@ -148,10 +195,14 @@ const ClassCompetitionManagement = () => {
 
   const getCompetitionBadge = (category: string) => {
     switch (category) {
-      case 'Arabic Creative Comic':
-        return <Badge variant="secondary" className="bg-purple-100 text-purple-700">🎨 Arabic Comic</Badge>;
-      case 'Sundanese Pop Cover':
-        return <Badge variant="secondary" className="bg-blue-100 text-blue-700">🎤 Pop Cover</Badge>;
+      case 'Film Pendek':
+        return <Badge variant="secondary" className="bg-purple-100 text-purple-700">🎬 Film Pendek</Badge>;
+      case 'Mini Vlog':
+        return <Badge variant="secondary" className="bg-orange-100 text-orange-700">📹 Mini Vlog</Badge>;
+      case 'Vocal Grup':
+        return <Badge variant="secondary" className="bg-blue-100 text-blue-700">🎤 Vocal Grup</Badge>;
+      case 'Komik Bhs Arab':
+        return <Badge variant="secondary" className="bg-purple-100 text-purple-700">🎨 Komik Arab</Badge>;
       case 'Market Day':
         return <Badge variant="secondary" className="bg-orange-100 text-orange-700">🛍️ Market Day</Badge>;
       default:
@@ -453,10 +504,28 @@ const ClassCompetitionManagement = () => {
                         {getCompetitionBadge(registration.competition_category)}
                       </td>
                       <td className="py-3 px-4">
-                        {new Date(registration.registration_date).toLocaleDateString()}
+                        {(() => {
+                          console.log('Rendering date for:', registration.pic_name, registration.registration_date);
+                          const date = new Date(registration.registration_date);
+                          const isValid = !isNaN(date.getTime());
+                          const result = isValid ? date.toLocaleDateString() : 'Invalid Date';
+                          console.log('Date result:', result);
+                          return result;
+                        })()}
                       </td>
                       <td className="py-3 px-4">
-                        {getStatusBadge(registration.status)}
+                        <Select 
+                          value={registration.status} 
+                          onValueChange={(value: 'confirmed' | 'pending') => handleStatusUpdate(registration.id, value)}
+                        >
+                          <SelectTrigger className="w-32">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="confirmed">✅ Confirmed</SelectItem>
+                            <SelectItem value="pending">⏳ Pending</SelectItem>
+                          </SelectContent>
+                        </Select>
                       </td>
                       <td className="py-3 px-4">
                         <Button

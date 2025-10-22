@@ -7,43 +7,43 @@ const VlogChallenge = () => {
 
   const tabContent = {
     vii: {
-      title: "Introducing Our Classroom",
-      description: "Showcase your classroom's unique personality and daily activities. Create an engaging vlog that introduces your class to the world!",
+      title: "Kenalin Kelas Kita",
+      description: "Unjukin sifat unik kelas kamu dan kegiatan sehari-hari. Bikin vlog yang seru yang kenalin kelas kamu ke dunia!",
       requirements: [
-        "Duration: 3-5 minutes",
-        "Show classroom activities and environment",
-        "Include student interviews",
-        "Highlight class achievements",
-        "Creative editing encouraged"
+        "Durasi: 3-5 menit",
+        "Tunjukin kegiatan dan suasana kelas",
+        "Include wawancara sama temen-temen",
+        "Prestasi kelas wajib ditampilin",
+        "Edit yang kreatif dan kekinian"
       ],
-      prize: "Best Vlog gets featured on school social media + Trophy",
-      example: "Show your classroom decoration, daily routines, and fun moments"
+      prize: "Vlog Terbaik bakal dipost di medsos sekolah + Piala Keren",
+      example: "Dekorasi kelas, rutinitas harian, dan momen-momen lucu"
     },
     viii: {
-      title: "OOTD at School",
-      description: "Express your style while following school guidelines. Create fashion-forward content that showcases creative and appropriate school outfits.",
+      title: "OOTD di Sekolah",
+      description: "Ekspresi gaya kamu tapi tetep ikutin aturan sekolah. Bikin konten fashion yang nunjukin outfit sekolah yang keren dan sesuai.",
       requirements: [
-        "Duration: 2-4 minutes",
-        "Showcase 3-5 different outfits",
-        "Explain outfit choices and creativity",
-        "Follow school dress code",
-        "Include styling tips"
+        "Durasi: 2-4 menit",
+        "Tunjukin 3-5 outfit beda",
+        "Jelasin pilihan outfit dan kreativitas kamu",
+        "Ikutin dress code sekolah",
+        "Kasih tips styling kekinian"
       ],
-      prize: "Fashion Voucher + Feature in School Magazine",
-      example: "Theme-based outfits, creative accessories, and style tips"
+      prize: "Voucher Fashion + Tampil di Majalah Sekolah",
+      example: "Outfit tema, aksesoris kreatif, dan tips gaya kekinian"
     },
     ix: {
-      title: "Promoting Our School",
-      description: "Become an ambassador for our school! Create compelling content that highlights what makes our school special and attracts new students.",
+      title: "Promosiin Sekolah Kita",
+      description: "Jadi duta sekolah! Bikin konten epik yang nunjukin apa yang bikin sekolah kita spesial dan menarik murid baru.",
       requirements: [
-        "Duration: 4-6 minutes",
-        "Tour of school facilities",
-        "Interview teachers and staff",
-        "Showcase extracurricular activities",
-        "Highlight academic programs"
+        "Durasi: 4-6 menit",
+        "Kelilingin fasilitas sekolah",
+        "Wawancara guru dan staff",
+        "Tunjukin kegiatan ekstrakurikuler",
+        "Highlight program akademik unggulan"
       ],
-      prize: "School Ambassador Award + Certificate",
-      example: "Campus tour, teacher interviews, and success stories"
+      prize: "Penghargaan Duta Sekolah + Sertifikat Keren",
+      example: "Tur kampus, wawancara guru, dan kisah sukses alumni"
     }
   };
 
@@ -53,72 +53,73 @@ const VlogChallenge = () => {
     <section className="py-16 bg-gradient-to-br from-purple-50 to-blue-50">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
-            BECOME A SCHOOL YOUTUBER/TIKTOKER?
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+            MAU JADI YOUTUBER/TIKTOKER SEKOLAH? 🎬
           </h2>
-          <p className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
-            JOIN THE VLOG CHALLENGE!
+          <p className="text-xl sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+            IKUTAN MINI VLOG, GAN! 🔥
           </p>
-          <p className="text-lg text-gray-600 mt-4 max-w-3xl mx-auto">
-            Show off your video editing skills and creativity. Win amazing prizes and get featured on our social media!
+          <p className="text-base sm:text-lg text-gray-600 mt-4 max-w-3xl mx-auto">
+            Unjukin skill edit video dan kreativitas kamu. Menangin hadiah keren dan dipost di medsos kita! 🏆
           </p>
         </div>
 
         {/* Tab Navigation */}
-        <div className="flex flex-wrap justify-center gap-4 mb-8">
+        <div className="flex flex-wrap justify-center gap-2 sm:gap-4 mb-8">
           {[
-            { id: 'vii', label: 'Grade VII', emoji: '🎒' },
-            { id: 'viii', label: 'Grade VIII', emoji: '👕' },
-            { id: 'ix', label: 'Grade IX', emoji: '🏫' }
+            { id: 'vii', label: 'Kelas 7 (Newbie)', emoji: '🎒' },
+            { id: 'viii', label: 'Kelas 8 (Pro Player)', emoji: '👕' },
+            { id: 'ix', label: 'Kelas 9 (Master)', emoji: '🏫' }
           ].map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center space-x-2 px-6 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 ${
+              className={`flex items-center space-x-1 sm:space-x-2 px-3 py-2 sm:px-6 sm:py-3 rounded-full text-sm sm:text-base font-semibold transition-all duration-300 transform hover:scale-105 ${
                 activeTab === tab.id
                   ? 'bg-gradient-to-r from-purple-500 to-blue-500 text-white shadow-lg'
                   : 'bg-white text-gray-700 hover:bg-gray-100 shadow-md'
               }`}
             >
-              <span className="text-lg">{tab.emoji}</span>
-              <span>{tab.label}</span>
+              <span className="text-sm sm:text-lg">{tab.emoji}</span>
+              <span className="hidden sm:inline">{tab.label}</span>
+              <span className="sm:hidden">{tab.label.split(' ')[0]}</span>
             </button>
           ))}
         </div>
 
         {/* Tab Content */}
-        <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8 max-w-4xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="bg-white rounded-2xl shadow-xl p-4 sm:p-6 md:p-8 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
             {/* Left Column - Content */}
             <div>
-              <h3 className="text-2xl font-bold text-gray-800 mb-4">
+              <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-3 sm:mb-4">
                 {currentContent.title}
               </h3>
               
-              <p className="text-gray-600 mb-6 leading-relaxed">
+              <p className="text-sm sm:text-base text-gray-600 mb-4 sm:mb-6 leading-relaxed">
                 {currentContent.description}
               </p>
 
               <div className="mb-6">
-                <h4 className="text-lg font-semibold text-gray-800 mb-3 flex items-center">
-                  <span className="mr-2">📋</span>
-                  Requirements:
-                </h4>
+                 <h4 className="text-base sm:text-lg font-semibold text-gray-800 mb-2 sm:mb-3 flex items-center">
+                   <span className="mr-2">📋</span>
+                   Syarat-syaratnya:
+                 </h4>
                 <ul className="space-y-2">
                   {currentContent.requirements.map((req, index) => (
                     <li key={index} className="flex items-start">
                       <span className="text-green-500 mr-2">✓</span>
-                      <span className="text-gray-700">{req}</span>
+                       <span className="text-sm sm:text-base text-gray-700">{req}</span>
                     </li>
                   ))}
                 </ul>
               </div>
 
               <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-                <h4 className="font-semibold text-yellow-800 mb-2 flex items-center">
-                  <span className="mr-2">🏆</span>
-                  Prize:
-                </h4>
+                 <h4 className="font-semibold text-yellow-800 mb-2 flex items-center">
+                   <span className="mr-2">🏆</span>
+                   Hadiahnya:
+                 </h4>
                 <p className="text-yellow-700">{currentContent.prize}</p>
               </div>
             </div>
@@ -126,59 +127,59 @@ const VlogChallenge = () => {
             {/* Right Column - Visual & CTA */}
             <div className="flex flex-col justify-between">
               <div>
-                <h4 className="text-lg font-semibold text-gray-800 mb-3 flex items-center">
-                  <span className="mr-2">💡</span>
-                  Example Idea:
-                </h4>
+                 <h4 className="text-lg font-semibold text-gray-800 mb-3 flex items-center">
+                   <span className="mr-2">💡</span>
+                   Ide Gokil:
+                 </h4>
                 <p className="text-gray-600 mb-6 bg-blue-50 rounded-lg p-4">
                   {currentContent.example}
                 </p>
 
-                <div className="bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg p-4 text-white">
-                  <h4 className="font-bold mb-2">🎥 Production Tips:</h4>
-                  <ul className="text-sm space-y-1">
-                    <li>• Use good lighting (natural light is best!)</li>
-                    <li>• Keep your camera steady</li>
-                    <li>• Add background music (copyright-free)</li>
-                    <li>• Use simple transitions and effects</li>
-                    <li>• Speak clearly and be yourself!</li>
-                  </ul>
-                </div>
+                 <div className="bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg p-4 text-white">
+                   <h4 className="font-bold mb-2">🎥 Tips Produksi Kekinian:</h4>
+                   <ul className="text-sm space-y-1">
+                     <li>• Pake cahaya yang bagus (cahaya alami paling oke!)</li>
+                     <li>• Kamera harus stabil, jangan goyang</li>
+                     <li>• Tambahin musik latar (bebas copyright ya!)</li>
+                     <li>• Pake transisi dan efek yang simple</li>
+                     <li>• Ngomongnya jelas dan jadi diri sendiri aja!</li>
+                   </ul>
+                 </div>
               </div>
 
               <div className="mt-6 space-y-3">
-                <button 
-                  onClick={() => window.location.href = '/register'}
-                  className="w-full bg-gradient-to-r from-orange-500 to-red-500 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-lg flex items-center justify-center space-x-2"
-                >
-                  <span>📹</span>
-                  <span>UPLOAD YOUR VLOG</span>
-                </button>
-                <button 
-                  onClick={() => alert('Guidelines PDF would be downloaded here. In production, this would link to a PDF file with detailed vlog challenge guidelines.')}
-                  className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-3 px-6 rounded-lg transition-all duration-300 flex items-center justify-center space-x-2"
-                >
-                  <span>📚</span>
-                  <span>DOWNLOAD FULL GUIDELINES</span>
-                </button>
+                 <button 
+                   onClick={() => window.location.href = '/register'}
+                   className="w-full bg-gradient-to-r from-orange-500 to-red-500 text-white font-bold py-2.5 px-4 sm:py-3 sm:px-6 rounded-lg text-sm sm:text-base transition-all duration-300 transform hover:scale-105 hover:shadow-lg flex items-center justify-center space-x-2"
+                 >
+                   <span>📹</span>
+                    <span>UPLOAD VLOG KAMU</span>
+                 </button>
+                 <button 
+                   onClick={() => alert('Guidelines PDF would be downloaded here. In production, this would link to a PDF file with detailed vlog challenge guidelines.')}
+                   className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-2.5 px-4 sm:py-3 sm:px-6 rounded-lg text-sm sm:text-base transition-all duration-300 flex items-center justify-center space-x-2"
+                 >
+                   <span>📚</span>
+                    <span>UNDUH PETUNJUK LENGKAP</span>
+                 </button>
               </div>
             </div>
           </div>
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12 max-w-2xl mx-auto">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6 mt-8 sm:mt-12 max-w-2xl mx-auto">
           {[
-            { number: '50+', label: 'Expected Participants' },
-            { number: '3', label: 'Categories' },
-            { number: '5', label: 'Amazing Prizes' },
-            { number: '100%', label: 'Fun Guaranteed' }
+            { number: '50+', label: 'Peserta Diprediksi' },
+            { number: '3', label: 'Kategori' },
+            { number: '5', label: 'Hadiah Keren' },
+            { number: '100%', label: 'Dijamin Seru!' }
           ].map((stat, index) => (
-            <div key={index} className="text-center bg-white rounded-xl p-4 shadow-lg">
-              <div className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+            <div key={index} className="text-center bg-white rounded-xl p-3 sm:p-4 shadow-lg">
+              <div className="text-xl sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
                 {stat.number}
               </div>
-              <div className="text-sm text-gray-600 mt-1">{stat.label}</div>
+              <div className="text-xs sm:text-sm text-gray-600 mt-1">{stat.label}</div>
             </div>
           ))}
         </div>

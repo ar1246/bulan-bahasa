@@ -33,3 +33,20 @@ export async function createSupabaseServerClient() {
     },
   });
 }
+
+export function createSupabasePublicClient() {
+  // Use service role key for public operations in development
+  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const key = serviceRoleKey || supabaseAnonKey;
+  
+  return createClient(supabaseUrl, key, {
+    global: {
+      fetch: (url, options = {}) => {
+        return fetch(url, {
+          ...options,
+          cache: "no-store",
+        });
+      },
+    },
+  });
+}

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { checkAdminRole } from '@/lib/admin-server';
-import { getContentSection, getAllContentSections, updateContentSection } from '@/lib/content-server';
+import { getContentSectionAuth, getAllContentSections, updateContentSection } from '@/lib/content-server';
 import type { ContentSection, ContentResponse } from '@/lib/content-types';
 
 // GET - Fetch content sections
@@ -24,7 +24,7 @@ export async function GET(request: NextRequest) {
 
     if (sectionKey) {
       // Get specific content section
-      const section = await getContentSection(sectionKey);
+      const section = await getContentSectionAuth(sectionKey);
       if (!section) {
         return NextResponse.json({ error: 'Content section not found' }, { status: 404 });
       }

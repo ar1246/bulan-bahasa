@@ -14,60 +14,50 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Skeleton } from '@/components/ui/skeleton'
 import { toast } from 'sonner'
-import { Search, Users, Trash2, RefreshCw } from 'lucide-react'
-
-interface User {
-  id: string
-  email?: string
-  firstName?: string
-  lastName?: string
-  username?: string
-  imageUrl?: string
-  createdAt: string
-  lastSignInAt?: string
-  role: string
-  banned: boolean
-}
-
-interface UsersResponse {
-  success: boolean
-  users: User[]
-  total: number
-  page: number
-  limit: number
-  totalPages: number
-  error?: string
-}
+import { Search, Users, Trash2, RefreshCw, Crown, Shield, User } from 'lucide-react'
+import type { UserRole } from '@/lib/content-types'
 
 export default function UserManagement() {
   const { user } = useUser()
-  const [users, setUsers] = useState<User[]>([])
+  const [users, setUsers] = useState<UserRole[]>([])
   const [loading, setLoading] = useState(true)
-  const [search, setSearch] = useState('')
-  const [page, setPage] = useState(1)
-  const [totalPages, setTotalPages] = useState(1)
-  const [total, setTotal] = useState(0)
+  const [currentUserRole, setCurrentUserRole] = useState<UserRole | null>(null)
   const [actionLoading, setActionLoading] = useState<string | null>(null)
+  const [promoteEmail, setPromoteEmail] = useState('')
+  const [promoteRole, setPromoteRole] = useState<'admin' | 'superuser'>('admin')
   
   const isSuperAdmin = user?.primaryEmailAddress?.emailAddress === 'arif@afna.link'
 
-  const fetchUsers = useCallback(async () => {
+  const fetchCurrentUserRole = useCallback(async () => {
     try {
-      setLoading(true)
-      const params = new URLSearchParams({
-        page: page.toString(),
-        limit: '10',
-        ...(search && { search })
-      })
-      
-      const response = await fetch(`/api/admin/users?${params}`)
-      const data: UsersResponse = await response.json()
+      const response = await fetch('/api/admin/my-role')
+      const data = await response.json()
       
       if (data.success) {
-        setUsers(data.users)
-        setTotalPages(data.totalPages)
-        setTotal(data.total)
+        setCurrentUserRole(data.data)
+      }
+    } catch (error) {
+      console.error('Error fetching current user role:', error)
+    }
+  }, [])
+
+  const fetchUsers = useCallback(async () => {
+    // Only superusers can view all users
+    if (!isSuperAdmin) {
+      console.log('User is not superadmin, skipping user fetch')
+      setLoading(false)
+      return
+    }
+
+    try {
+      setLoading(true)
+      const response = await fetch('/api/admin/users')
+      const data = await response.json()
+      
+      if (data.success) {
+        setUsers(data.data)
       } else {
+        console.error('Error fetching users:', data.error)
         toast.error(data.error || 'Failed to fetch users')
       }
     } catch (error) {
@@ -76,57 +66,73 @@ export default function UserManagement() {
     } finally {
       setLoading(false)
     }
-  }, [page, search])
+  }, [isSuperAdmin])
 
   useEffect(() => {
-    fetchUsers()
-  }, [fetchUsers])
+    fetchCurrentUserRole()
+    if (isSuperAdmin) {
+      fetchUsers()
+    }
+  }, [fetchCurrentUserRole, fetchUsers, isSuperAdmin])
 
-  const handleRoleChange = async (userId: string, newRole: 'user' | 'admin') => {
+  const handlePromoteUser = async () => {
+    if (!promoteEmail) {
+      toast.error('Email is required')
+      return
+    }
+
     try {
-      setActionLoading(userId)
-      const response = await fetch(`/api/admin/users/${userId}`, {
-        method: 'PUT',
+      setActionLoading('promote')
+      const response = await fetch('/api/admin/promote-user', {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ role: newRole }),
+        body: JSON.stringify({ 
+          targetEmail: promoteEmail,
+          targetRole: promoteRole 
+        }),
       })
       
       const data = await response.json()
       
       if (data.success) {
-        toast.success(`User role updated to ${newRole}`)
+        toast.success(`User ${promoteEmail} promoted to ${promoteRole}`)
+        setPromoteEmail('')
         fetchUsers()
       } else {
-        toast.error(data.error || 'Failed to update role')
+        toast.error(data.error || 'Failed to promote user')
       }
     } catch (error) {
-      console.error('Error updating role:', error)
-      toast.error('Failed to update role')
+      console.error('Error promoting user:', error)
+      toast.error('Failed to promote user')
     } finally {
       setActionLoading(null)
     }
   }
 
-  const handleDeleteUser = async (userId: string) => {
+  const handleDemoteUser = async (email: string) => {
     try {
-      setActionLoading(userId)
-      const response = await fetch(`/api/admin/users/${userId}`, {
-        method: 'DELETE',
+      setActionLoading(email)
+      const response = await fetch('/api/admin/demote-user', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ targetEmail: email }),
       })
       
       const data = await response.json()
       
       if (data.success) {
-        toast.success('User deleted successfully')
+        toast.success(`User ${email} demoted to regular user`)
         fetchUsers()
       } else {
-        toast.error(data.error || 'Failed to delete user')
+        toast.error(data.error || 'Failed to demote user')
       }
     } catch (error) {
-      console.error('Error deleting user:', error)
-      toast.error('Failed to delete user')
+      console.error('Error demoting user:', error)
+      toast.error('Failed to demote user')
     } finally {
       setActionLoading(null)
     }
@@ -137,20 +143,84 @@ export default function UserManagement() {
     return new Date(dateString).toLocaleDateString()
   }
 
-  const getInitials = (firstName?: string, lastName?: string, email?: string) => {
-    if (firstName && lastName) return `${firstName[0]}${lastName[0]}`.toUpperCase()
-    if (firstName) return firstName[0].toUpperCase()
+  const getInitials = (email?: string) => {
     if (email) return email[0].toUpperCase()
     return 'U'
+  }
+
+  const getRoleIcon = (role: string) => {
+    switch (role) {
+      case 'superuser':
+        return <Crown className="h-4 w-4 text-yellow-500" />
+      case 'admin':
+        return <Shield className="h-4 w-4 text-blue-500" />
+      default:
+        return <User className="h-4 w-4 text-gray-500" />
+    }
+  }
+
+  const getRoleBadgeVariant = (role: string) => {
+    switch (role) {
+      case 'superuser':
+        return 'destructive'
+      case 'admin':
+        return 'default'
+      default:
+        return 'secondary'
+    }
+  }
+
+  // Show loading state while checking user role
+  if (loading && !currentUserRole) {
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <h2 className="text-2xl font-bold">User Role Management</h2>
+        </div>
+        <div className="grid gap-4">
+          {[...Array(3)].map((_, i) => (
+            <Card key={i}>
+              <CardContent className="p-6">
+                <div className="flex items-center space-x-4">
+                  <Skeleton className="h-12 w-12 rounded-full" />
+                  <div className="space-y-2">
+                    <Skeleton className="h-4 w-[250px]" />
+                    <Skeleton className="h-4 w-[200px]" />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </div>
+    )
+  }
+
+  // Only show user management for superusers
+  if ((currentUserRole && currentUserRole.role !== 'superuser') || !isSuperAdmin) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="text-center">
+          <Shield className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+          <h3 className="text-lg font-semibold">Access Restricted</h3>
+          <p className="text-muted-foreground">Only superusers can manage user roles</p>
+          {currentUserRole && (
+            <p className="text-sm text-muted-foreground mt-2">
+              Your current role: {currentUserRole.role}
+            </p>
+          )}
+        </div>
+      </div>
+    )
   }
 
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold">User Management</h2>
+          <h2 className="text-2xl font-bold">User Role Management</h2>
           <p className="text-muted-foreground">
-            Total users: {total} | Page {page} of {totalPages}
+            Manage user roles and permissions
           </p>
         </div>
         <Button onClick={fetchUsers} variant="outline" size="sm">
@@ -159,20 +229,40 @@ export default function UserManagement() {
         </Button>
       </div>
 
-      <div className="flex gap-4 items-center">
-        <div className="relative flex-1 max-w-sm">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input
-            placeholder="Search users..."
-            value={search}
-            onChange={(e) => {
-              setSearch(e.target.value)
-              setPage(1)
-            }}
-            className="pl-10"
-          />
-        </div>
-      </div>
+      {/* Promote User Section - Only for superusers */}
+      <Card>
+        <CardContent className="pt-6">
+          <h3 className="text-lg font-semibold mb-4">Promote User</h3>
+          <div className="flex gap-2 items-end">
+            <div className="flex-1">
+              <Input
+                placeholder="Enter user email"
+                value={promoteEmail}
+                onChange={(e) => setPromoteEmail(e.target.value)}
+                type="email"
+              />
+            </div>
+            <Select value={promoteRole} onValueChange={(value: 'admin' | 'superuser') => setPromoteRole(value)}>
+              <SelectTrigger className="w-32">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="admin">Admin</SelectItem>
+                <SelectItem value="superuser">Superuser</SelectItem>
+              </SelectContent>
+            </Select>
+            <Button 
+              onClick={handlePromoteUser} 
+              disabled={actionLoading === 'promote' || !promoteEmail}
+            >
+              {actionLoading === 'promote' ? (
+                <RefreshCw className="h-4 w-4 mr-2 animate-spin" />
+              ) : null}
+              Promote
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
 
       {loading ? (
         <div className="space-y-4">
@@ -206,82 +296,63 @@ export default function UserManagement() {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-4">
                     <Avatar className="h-12 w-12">
-                      <AvatarImage src={userItem.imageUrl} alt={userItem.email} />
                       <AvatarFallback>
-                        {getInitials(userItem.firstName, userItem.lastName, userItem.email)}
+                        {getInitials(userItem.email)}
                       </AvatarFallback>
                     </Avatar>
                     <div>
                       <div className="flex items-center gap-2">
                         <p className="font-medium">
-                          {userItem.firstName && userItem.lastName
-                            ? `${userItem.firstName} ${userItem.lastName}`
-                            : userItem.username || userItem.email || 'Unknown User'
-                          }
+                          {userItem.email}
                         </p>
-                        <Badge variant={userItem.role === 'admin' ? 'default' : 'secondary'}>
+                        <Badge variant={getRoleBadgeVariant(userItem.role)} className="flex items-center gap-1">
+                          {getRoleIcon(userItem.role)}
                           {userItem.role}
                         </Badge>
-                        {userItem.banned && (
-                          <Badge variant="destructive">Banned</Badge>
-                        )}
                       </div>
-                      <p className="text-sm text-muted-foreground">{userItem.email}</p>
                       <div className="text-xs text-muted-foreground mt-1">
-                        Joined: {formatDate(userItem.createdAt)} | 
-                        Last seen: {formatDate(userItem.lastSignInAt)}
+                        User ID: {userItem.user_id} | 
+                        Joined: {formatDate(userItem.created_at)} | 
+                        Updated: {formatDate(userItem.updated_at)}
                       </div>
+                      {userItem.created_by && (
+                        <div className="text-xs text-muted-foreground">
+                          Promoted by: {userItem.created_by}
+                        </div>
+                      )}
                     </div>
                   </div>
                   
                   <div className="flex items-center gap-2">
-                    {isSuperAdmin && userItem.role !== 'admin' && (
-                      <Select
-                        value={userItem.role}
-                        onValueChange={(value: 'user' | 'admin') => 
-                          handleRoleChange(userItem.id, value)
-                        }
-                        disabled={actionLoading === userItem.id}
-                      >
-                        <SelectTrigger className="w-24">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="user">User</SelectItem>
-                          <SelectItem value="admin">Admin</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    )}
-                    
-                    {isSuperAdmin && userItem.role !== 'admin' && (
+                    {userItem.role !== 'user' && userItem.email !== currentUserRole?.email && (
                       <AlertDialog>
                         <AlertDialogTrigger asChild>
                           <Button
-                            variant="destructive"
+                            variant="outline"
                             size="sm"
-                            disabled={actionLoading === userItem.id}
+                            disabled={actionLoading === userItem.email}
                           >
-                            {actionLoading === userItem.id ? (
+                            {actionLoading === userItem.email ? (
                               <RefreshCw className="h-4 w-4 animate-spin" />
                             ) : (
-                              <Trash2 className="h-4 w-4" />
+                              'Demote'
                             )}
                           </Button>
                         </AlertDialogTrigger>
                         <AlertDialogContent>
                           <AlertDialogHeader>
-                            <AlertDialogTitle>Delete User</AlertDialogTitle>
+                            <AlertDialogTitle>Demote User</AlertDialogTitle>
                             <AlertDialogDescription>
-                              Are you sure you want to delete {userItem.email}? This action cannot be undone.
+                              Are you sure you want to demote {userItem.email} to a regular user? They will lose admin access.
                             </AlertDialogDescription>
                           </AlertDialogHeader>
                           <AlertDialogFooter>
                             <AlertDialogCancel>Cancel</AlertDialogCancel>
                             <AlertDialogAction
-                              onClick={() => handleDeleteUser(userItem.id)}
+                              onClick={() => handleDemoteUser(userItem.email)}
                               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
                             >
-                              Delete
+                              Demote
                             </AlertDialogAction>
                           </AlertDialogFooter>
                         </AlertDialogContent>
@@ -295,39 +366,7 @@ export default function UserManagement() {
         </div>
       )}
 
-      {totalPages > 1 && (
-        <div className="flex justify-center gap-2">
-          <Button
-            variant="outline"
-            onClick={() => setPage(page - 1)}
-            disabled={page === 1}
-          >
-            Previous
-          </Button>
-          <div className="flex items-center gap-2">
-            {[...Array(Math.min(5, totalPages))].map((_, i) => {
-              const pageNum = i + 1
-              return (
-                <Button
-                  key={pageNum}
-                  variant={page === pageNum ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => setPage(pageNum)}
-                >
-                  {pageNum}
-                </Button>
-              )
-            })}
-          </div>
-          <Button
-            variant="outline"
-            onClick={() => setPage(page + 1)}
-            disabled={page === totalPages}
-          >
-            Next
-          </Button>
-        </div>
-      )}
+
     </div>
   )
 }
